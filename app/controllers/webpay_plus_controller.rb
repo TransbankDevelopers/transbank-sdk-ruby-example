@@ -1,0 +1,2 @@
+class WebpayPlusController < ApplicationController
+end
