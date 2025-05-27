@@ -1,0 +1,22 @@
+<div class="tbk-header" data-controller="menu">
+    <div class="tbk-header-left">
+        <button class="tbk-buger-menu" id="burger-menu" data-action="menu#toggleMenu">
+            <%= image_tag "menu.svg", alt: "tbk logo", width: "32", height: "32" %>
+        </button>
+        <a href="<%= root_path %>">
+            <%= image_tag "tbk-logo.svg", alt: "tbk logo", width: "181", height: "34", class: "tbk-logo" %>
+        </a>
+    </div>
+    <div class="tbk-header-options">
+        <a href="https://transbank.continuumhq.dev/slack_community" target="_blank" rel="noopener"
+            class="tbk-button secondary"><span class="underline text-tbk-red">Comunidad Slack</span></a>
+
+        <button id="dark-mode" class="dark-mode-btn" data-action="menu#toggleTheme">
+            <%= image_tag "sun.svg", alt: "sun", class: "sun-img" %>
+            <%= image_tag "moon.svg", alt: "moon", class: "moon-img" %>
+        </button>
+    </div>
+
+    <%# Si el menú móvil es un partial que se incluye globalmente, iría aquí o en el layout principal %>
+    <%#= render 'partials/mobile_menu' %>
+</div>
