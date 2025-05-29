@@ -1,0 +1,14 @@
+<% if defined?(navigation) && navigation && !navigation.empty? %>
+  <div class="nav-container" data-controller="nav-highlighter">
+    <span class="nav-title">Contenido en esta página</span>
+    <ul class="nav-list">
+      <% navigation.each do |section_id, title| %>
+        <li>
+          <a href="#<%= section_id %>" class="item" data-nav-highlighter-target="link">
+            <%= title %>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
