@@ -34,11 +34,11 @@ class WebpayPlusController < ApplicationController
         # Pago abortado
         @view_template = "error/webpay/aborted"
         @request_data = params
-        @resp = @transaction.status(params["TBK_TOKEN"])
+        @resp = @tx.status(params["TBK_TOKEN"])
       elsif params.key?("token_ws")
         # Flujo normal: 'webpay.commit'
-        @resp = @transaction.commit(params["token_ws"])
-        @view_template = "webpay_plus/commit"
+        @resp = @tx.commit(params["token_ws"])
+        @view_template = "webpay_plus/commit" 
         @token = params["token_ws"]
       else
         # Timeout o un caso no manejado
@@ -63,7 +63,7 @@ class WebpayPlusController < ApplicationController
       token_to_refund = req_params[:token]
       amount_to_refund = req_params[:amount].to_i
 
-      @resp = @transaction.refund(token_to_refund, amount_to_refund)
+      @resp = @tx.refund(token_to_refund, amount_to_refund)
       @token = token_to_refund
 
 
@@ -76,9 +76,8 @@ class WebpayPlusController < ApplicationController
   def status
     begin
       token = params[:token]
-      @resp = @transaction.status(token)
-      @request_data = params
-
+      @resp = @tx.status(token)
+      @request_data = params 
 
     rescue StandardError => e
       flash[:alert] = "Ocurrió un error inesperado en status: #{e.message}"
