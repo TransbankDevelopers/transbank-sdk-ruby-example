@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
   <head>
     <title><%= content_for(:title) || "Transbank Sdk Ruby Example" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -33,6 +33,21 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class="main-container">
+        <%= render 'partials/header' %>
+        <div class="body-container <%= 'no-nav' if @navigation.nil? || @navigation.empty? %>">
+            <%= render 'partials/sidebar' %>
+            <div class="body-content ">
+                <%= yield %>
+            	<%= render 'partials/channels' %>
+            </div>
+            <div class="helper-content">
+               
+				<%= render 'partials/navigation', navigation: @navigation %>
+            </div>
+        </div>
+        <%= render 'partials/footer' %>
+
+    </div>
   </body>
 </html>
