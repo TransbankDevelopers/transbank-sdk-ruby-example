@@ -38,7 +38,7 @@ class WebpayPlusController < ApplicationController
       elsif params.key?("token_ws")
         # Flujo normal: 'webpay.commit'
         @resp = @tx.commit(params["token_ws"])
-        @view_template = "webpay_plus/commit" 
+        @view_template = "webpay_plus/commit"
         @token = params["token_ws"]
       else
         # Timeout o un caso no manejado
@@ -77,7 +77,7 @@ class WebpayPlusController < ApplicationController
     begin
       token = params[:token]
       @resp = @tx.status(token)
-      @request_data = params 
+      @request_data = params
 
     rescue StandardError => e
       flash[:alert] = "Ocurrió un error inesperado en status: #{e.message}"
