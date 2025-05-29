@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
 
-  root to: 'product_index#index'
+  root to: "product_index#index"
 
   # Webpay Plus routes
   namespace :webpay_plus do
