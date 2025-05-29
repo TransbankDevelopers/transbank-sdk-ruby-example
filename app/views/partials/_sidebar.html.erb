@@ -1,0 +1,135 @@
+<%# app/views/partials/_sidebar.html.erb (Versión con Stimulus) %>
+
+<aside class="tbk-sidebar" id="sidebar-desk" data-controller="sidebar"
+       data-sidebar-target="sidebar"> 
+    <div class="toogle-btn-container">
+        <button class="tbk-toggle-btn" id="toggle-sidebar-btn" data-action="sidebar#toggleSidebar"
+                data-sidebar-target="toggleButton"> 
+            &lt;
+        </button>
+    </div>
+
+    <nav class="sidebar-content" id="sidebar-content" data-sidebar-target="sidebarContent">
+        <div>
+            <p class="tbk-sidebar-item-title">Webpay Plus</p>
+            <ul>
+                <li style="margin-bottom:20px;">
+                    <button class="sidebar-collapsible-title" data-collapsible="webpay-plus"
+                            data-action="sidebar#toggleCollapsible" data-sidebar-target="collapsibleTitle">
+                        <span class="general-text">Webpay Plus</span>
+                        <%= image_tag 't-arrow.svg', class: 'arrow', alt: 't-arrow', width: 24, height: 24, data: { sidebar_target: "arrow" } %>
+                    </button>
+                    <ul class="collapsible-content" id="collapse-webpay-plus" data-sidebar-target="collapsibleContent">
+                        <li class="collapsible-items">
+                            <a href="<%= webpay_plus_create_path %>" class="tbk-sidebar-item" data-sidebar-target="sidebarItem">
+                                Flujo Completo
+                            </a>
+                        </li>
+                        <li class="collapsible-items">
+                            <a href="<%= webpay_plus_api_operations_path %>" class="tbk-sidebar-item" data-sidebar-target="sidebarItem">
+                                Operaciones API
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+              
+                <li style="margin-bottom:20px;">
+                    <button class="sidebar-collapsible-title" data-collapsible="webpay-plus-mall"
+                            data-action="sidebar#toggleCollapsible" data-sidebar-target="collapsibleTitle">
+                        <span class="general-text">Webpay Plus Mall</span>
+                        <%= image_tag 't-arrow.svg', class: 'arrow', alt: 't-arrow', width: 24, height: 24, data: { sidebar_target: "arrow" } %>
+                    </button>
+                    <ul class="collapsible-content" id="collapse-webpay-plus-mall" data-sidebar-target="collapsibleContent">
+                        <li class="collapsible-items">
+                            <a href="<%= webpay_mall_create_path %>" class="tbk-sidebar-item" data-sidebar-target="sidebarItem">
+                                Flujo Completo
+                            </a>
+                        </li>
+                        <li class="collapsible-items">
+                            <a href="<%= webpay_mall_api_operations_path %>" class="tbk-sidebar-item" data-sidebar-target="sidebarItem">
+                                Operaciones API
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li style="margin-bottom:20px;">
+                    <button class="sidebar-collapsible-title" data-collapsible="webpay-plus-deferred"
+                            data-action="sidebar#toggleCollapsible" data-sidebar-target="collapsibleTitle">
+                        <span class="general-text">Webpay Plus Diferido</span>
+                        <%= image_tag 't-arrow.svg', class: 'arrow', alt: 't-arrow', width: 24, height: 24, data: { sidebar_target: "arrow" } %>
+                    </button>
+                    <ul class="collapsible-content" id="collapse-webpay-plus-deferred" data-sidebar-target="collapsibleContent">
+                        <li class="collapsible-items">
+                            <a href="<%= webpay_deferred_create_path %>" class="tbk-sidebar-item" data-sidebar-target="sidebarItem">
+                                Flujo Completo
+                            </a>
+                        </li>
+                        <li class="collapsible-items">
+                            <a href="<%= webpay_deferred_api_operations_path %>" class="tbk-sidebar-item" data-sidebar-target="sidebarItem">
+                                Operaciones API
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li style="margin-bottom:20px;">
+                    <button class="sidebar-collapsible-title" data-collapsible="webpay-mall-diferido"
+                            data-action="sidebar#toggleCollapsible" data-sidebar-target="collapsibleTitle">
+                        <span class="general-text">Webpay Plus Mall Diferido</span>
+                        <%= image_tag 't-arrow.svg', class: 'arrow', alt: 't-arrow', width: 24, height: 24, data: { sidebar_target: "arrow" } %>
+                    </button>
+                    <ul class="collapsible-content" id="collapse-webpay-mall-diferido" data-sidebar-target="collapsibleContent">
+                        <li class="collapsible-items">
+                            <a href="<%= webpay_mall_deferred_create_path %>" class="tbk-sidebar-item" data-sidebar-target="sidebarItem">
+                                Flujo Completo
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <hr class="sidebar-divider" />
+        </div>
+
+        <div>
+            <p class="tbk-sidebar-item-title">Webpay Oneclick</p>
+            <ul>
+
+                <li style="margin-bottom:20px;">
+                    <button class="sidebar-collapsible-title" data-collapsible="oneclick-mall"
+                            data-action="sidebar#toggleCollapsible" data-sidebar-target="collapsibleTitle">
+                        <span class="general-text">Oneclick Mall</span>
+                        <%= image_tag 't-arrow.svg', class: 'arrow', alt: 't-arrow', width: 24, height: 24, data: { sidebar_target: "arrow" } %>
+                    </button>
+                    <ul class="collapsible-content" id="collapse-oneclick-mall" data-sidebar-target="collapsibleContent">
+                        <li class="collapsible-items">
+                            <a href="<%= oneclick_mall_start_path %>" class="tbk-sidebar-item" data-sidebar-target="sidebarItem">
+                                Flujo Completo
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+                <li style="margin-bottom:20px;">
+                    <button class="sidebar-collapsible-title" data-collapsible="oneclick-mall-deferred"
+                            data-action="sidebar#toggleCollapsible" data-sidebar-target="collapsibleTitle">
+                        <span class="general-text">Oneclick Mall Diferido</span>
+                        <%= image_tag 't-arrow.svg', class: 'arrow', alt: 't-arrow', width: 24, height: 24, data: { sidebar_target: "arrow" } %>
+                    </button>
+                    <ul class="collapsible-content" id="collapse-oneclick-mall-deferred" data-sidebar-target="collapsibleContent">
+                        <li class="collapsible-items">
+                            <a href="<%= oneclick_mall_deferred_start_path %>" class="tbk-sidebar-item" data-sidebar-target="sidebarItem">
+                                Flujo Completo
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <hr class="sidebar-divider" />
+        </div>
+    </nav>
+</aside>
+
+
+<div data-sidebar-target="bodyContainer" class="body-container-placeholder" style="display: none;"></div>
