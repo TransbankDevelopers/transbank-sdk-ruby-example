@@ -1,0 +1,10 @@
+<div class="breadcrumbs-container">
+  <% breadcrumbs.each_with_index do |crumb, index| %>
+    <div class="breadcrumbs-items">
+      <%= link_to crumb[:label], crumb[:path], class: index == breadcrumbs.size - 1 ? 'current-breadcrumb' : '' %>
+      <% unless index == breadcrumbs.size - 1 %>
+        <%= image_tag 't-arrow.svg', alt: 't-arrow', width: 24, height: 24 %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
