@@ -1,6 +1,6 @@
 require_relative "boot"
 
-require "rails"
+require "rails/all"
 require "active_model/railtie"
 require "active_job/railtie"
 require "action_controller/railtie"
