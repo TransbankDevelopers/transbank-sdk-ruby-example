@@ -18,12 +18,34 @@ Bundle install
 npm install
 ```
 
-## Ejecución
+## Ejecución Desarrollo
 
 Para poder correr el proyecto en modo desarrollo, debes utilizar el siguiente comando en una consola:
 
 ```bash
 Rails s
+```
+
+## Ejecución Producción
+
+1. Generar un archivo .env con las siguientes variables (puedes generar una clave ejecutando: 'rails secret'):
+
+```bash
+RAILS_ENV=production
+SECRET_KEY_BASE=xxxx
+```
+
+2. Compilar los estáticos 
+
+```bash
+RAILS_ENV=production bin/rails assets:clobber
+RAILS_ENV=production bin/rails assets:precompile
+```
+
+3. Finalmente ejecutar el siguiente comando en una consola:
+
+```bash
+rails s -p 3100 -e production
 ```
 
 Al terminar, deberías ver la URL para poder acceder al proyecto. Un ejemplo de la URL puede ser **http://127.0.0.1:3000**
