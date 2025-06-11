@@ -1,0 +1,36 @@
+<%= render 'shared/breadcrumbs', breadcrumbs: [
+  { label: 'Inicio', path: root_path },
+  { label: 'Webpay Plus', path: '/webpay-plus/create' },
+  { label: 'Consultar estado de transacción', path: '/webpay-plus/status' }
+] %>
+
+<h1>Webpay Plus - Consultar estado de transacción</h1>
+<p class="mb-32">
+    Puedes solicitar el estado de una transacción hasta 7 días después de su realización. No hay
+    límite de solicitudes de este tipo durante ese período. Sin embargo, una vez pasados los 7 días, ya no podrás revisar
+    su estado.
+</p>
+
+<h2 id="request">Paso 1 - Petición:</h2>
+<p class="mb-32">
+    Para realizar la consulta, necesitas el token de la transacción de la cual deseas obtener el estado. Utiliza
+    este token para realizar una llamada a <code>WebpayPlus::Transaction</code>.
+</p>
+
+<pre>
+  <code class="language-ruby">
+  @resp = @transaction.status(@token)
+  </code>
+</pre>
+
+<h2 id="response">Paso 2: Respuesta</h2>
+<p class="mb-32">
+    Transbank responderá con la siguiente información. Asegúrate de guardar esta respuesta, y la única validación
+    necesaria es que el campo <code>response_code</code> sea igual a cero.
+</p>
+
+<pre>
+  <code class="language-json"><%= JSON.pretty_generate(@respond_data) %></code>
+</pre>
+
+

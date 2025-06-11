@@ -1,7 +1,10 @@
+require 'logger'
+
 class WebpayPlusController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [ :commit, :refund ]
 
   PRODUCT = "Webpay Plus".freeze
+  logger = Logger.new(STDOUT)
 
   before_action :set_transbank_transaction
 
@@ -13,12 +16,11 @@ class WebpayPlusController < ApplicationController
         return_url: webpay_plus_commit_url,
         amount: SecureRandom.random_number(1000..2000)
       }
-
       @resp = @tx.create(create_tx[:buy_order], create_tx[:session_id], create_tx[:amount], create_tx[:return_url])
       @request_data = create_tx
-      @respond_data = @resp
-
+      @respond_data = @resp.with_indifferent_access
     rescue StandardError => e
+      logger.error(e)
       flash[:alert] = "Ocurrió un error inesperado: #{e.message}"
       render "shared/error_page", locals: { error: e.message }
     end
@@ -40,6 +42,8 @@ class WebpayPlusController < ApplicationController
         @resp = @tx.commit(params["token_ws"])
         @view_template = "webpay_plus/commit"
         @token = params["token_ws"]
+        @returnUrl = webpay_plus_commit_url
+        @respond_data = @resp.with_indifferent_access
       else
         # Timeout o un caso no manejado
         @view_template = "error/webpay/timeout"
@@ -51,6 +55,7 @@ class WebpayPlusController < ApplicationController
       render @view_template
 
     rescue StandardError => e
+      logger.error(e)
       flash[:alert] = "Ocurrió un error inesperado en commit: #{e.message}"
       render "shared/error_page", locals: { error: e.message }
     end
@@ -65,9 +70,9 @@ class WebpayPlusController < ApplicationController
 
       @resp = @tx.refund(token_to_refund, amount_to_refund)
       @token = token_to_refund
-
-
+      @respond_data = @resp.with_indifferent_access
     rescue StandardError => e
+      logger.error(e)
       flash[:alert] = "Ocurrió un error inesperado en refund: #{e.message}"
       render "shared/error_page", locals: { error: e.message }
     end
@@ -78,8 +83,9 @@ class WebpayPlusController < ApplicationController
       token = params[:token]
       @resp = @tx.status(token)
       @request_data = params
-
+      @respond_data = @resp.with_indifferent_access
     rescue StandardError => e
+      logger.error(e)
       flash[:alert] = "Ocurrió un error inesperado en status: #{e.message}"
       @resp = nil
       render "shared/error_page", locals: { error: e.message }
