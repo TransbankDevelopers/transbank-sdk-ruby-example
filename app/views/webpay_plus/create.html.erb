@@ -43,13 +43,13 @@
 
 <pre>
   <code class="language-html">
-  <%= h(<<~HTML)
-  <form action="https://webpay3gint.transbank.cl/webpayserver/initTransaction" method="POST">
-    <input type="hidden" name="token_ws" value="#{@respond_data["token"]}" />
-    <input type="submit" value="Pagar" />
-  </form>
-  HTML
-  %>   
+<%= h(<<~HTML)
+<form action="https://webpay3gint.transbank.cl/webpayserver/initTransaction" method="POST">
+  <input type="hidden" name="token_ws" value="#{@respond_data["token"]}" />
+  <input type="submit" value="Pagar" />
+</form>
+HTML
+%>
   </code>
 </pre>
 
