@@ -9,19 +9,22 @@
   Esto nos permitirá redirigir al Tarjetahabiente hacia el formulario de pago en el siguiente paso.
 </p>
 
+<p class="mb-32">
+  Todas las transacciones en este proyecto de ejemplo son realizadas en
+          ambiente de integración.
+</p>
+
 <h2 id="request">Paso 1: Petición</h2>
-<ul class="mb-32">
+<ol class="bullet-list mb-32">
   <li>Comienza por importar la librería WebpayPlus en tu proyecto.</li>
   <li>Luego, crea una transacción utilizando las funciones proporcionadas mediante el SDK.</li>
-</ul>
+</ol>
+
 
 <pre>
   <code class="language-ruby">
-  require 'transbank/sdk/webpay/webpay_plus/transaction'
-  include Transbank::Webpay::WebpayPlus
-
-  options = Options.new(API_KEY, COMMERCE_CODE, Options::ENVIRONMENT_INTEGRATION)
-  @transaction = Transaction.new(options)
+  options = Transbank::Webpay::Options.new(commerce_code, api_key, environment)
+  @tx = Transbank::Webpay::WebpayPlus::Transaction.new(options)
   @resp = @transaction.create(buy_order, session_id, amount, return_url)
   </code>
 </pre>
@@ -84,5 +87,4 @@ HTML
     </div>
   </div>
 </form>
-
 

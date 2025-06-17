@@ -14,7 +14,7 @@
 <h2 id="request">Paso 1 - Petición:</h2>
 <p class="mb-32">
     Para realizar la consulta, necesitas el token de la transacción de la cual deseas obtener el estado. Utiliza
-    este token para realizar una llamada a <code>WebpayPlus::Transaction</code>.
+    este token para realizar una llamada al SDK.
 </p>
 
 <pre>
@@ -25,11 +25,10 @@
 
 <h2 id="response">Paso 2: Respuesta</h2>
 <p class="mb-32">
-    Transbank responderá con la siguiente información. Asegúrate de guardar esta respuesta, y la única validación
-    necesaria es que el campo <code>response_code</code> sea igual a cero.
+  Una vez que hayas creado la transacción, aquí encontrarás los datos de respuesta generados por el proceso.
 </p>
 
-<pre>
+<pre class="mb-32">
   <code class="language-json"><%= JSON.pretty_generate(@respond_data) %></code>
 </pre>
 
