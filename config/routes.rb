@@ -54,19 +54,19 @@ Rails.application.routes.draw do
 
   # --- Oneclick Mall ---
   # Controladores: OneclickMallController
-  get "oneclick-mall/start", to: "oneclick_mall#start_inscription", as: :oneclick_mall_start # Acción renombrada a snake_case
-  get "oneclick-mall/finish", to: "oneclick_mall#finish_inscription", as: :oneclick_mall_finish
-  post "oneclick-mall/authorize", to: "oneclick_mall#authorize_mall", as: :oneclick_mall_authorize
-  get "oneclick-mall/delete", to: "oneclick_mall#delete_inscription", as: :oneclick_mall_delete
+  get "oneclick-mall/start", to: "oneclick_mall#start", as: :oneclick_mall_start # Acción renombrada a snake_case
+  get "oneclick-mall/finish", to: "oneclick_mall#finish", as: :oneclick_mall_finish
+  get "oneclick-mall/authorize", to: "oneclick_mall#authorize", as: :oneclick_mall_authorize
+  get "oneclick-mall/delete", to: "oneclick_mall#delete", as: :oneclick_mall_delete
   get "oneclick-mall/refund", to: "oneclick_mall#refund", as: :oneclick_mall_refund
   get "oneclick-mall/status", to: "oneclick_mall#status", as: :oneclick_mall_status
 
   # --- Oneclick Mall Diferido ---
   # Controladores: OneclickMallDeferredController
-  get "oneclick-mall-diferido/start", to: "oneclick_mall_deferred#start_inscription", as: :oneclick_mall_deferred_start
-  get "oneclick-mall-diferido/finish", to: "oneclick_mall_deferred#finish_inscription", as: :oneclick_mall_deferred_finish
-  post "oneclick-mall-diferido/authorize", to: "oneclick_mall_deferred#authorize_mall", as: :oneclick_mall_deferred_authorize
-  get "oneclick-mall-diferido/delete", to: "oneclick_mall_deferred#delete_inscription", as: :oneclick_mall_deferred_delete
+  get "oneclick-mall-diferido/start", to: "oneclick_mall_deferred#start", as: :oneclick_mall_deferred_start
+  get "oneclick-mall-diferido/finish", to: "oneclick_mall_deferred#finish", as: :oneclick_mall_deferred_finish
+  get "oneclick-mall-diferido/authorize", to: "oneclick_mall_deferred#authorize", as: :oneclick_mall_deferred_authorize
+  get "oneclick-mall-diferido/delete", to: "oneclick_mall_deferred#delete", as: :oneclick_mall_deferred_delete
   get "oneclick-mall-diferido/status", to: "oneclick_mall_deferred#status", as: :oneclick_mall_deferred_status
   get "oneclick-mall-diferido/refund", to: "oneclick_mall_deferred#refund", as: :oneclick_mall_deferred_refund
   get "oneclick-mall-diferido/capture", to: "oneclick_mall_deferred#capture", as: :oneclick_mall_deferred_capture
