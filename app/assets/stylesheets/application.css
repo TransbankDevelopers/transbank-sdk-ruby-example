@@ -13,27 +13,27 @@
 
 @font-face {
   font-family: "Open Sans";
-  src: url("/fonts/OpenSans-Regular.ttf") format("truetype");
+  src: url("/assets/fonts/OpenSans-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
   font-family: "Open Sans";
-  src: url("/fonts/OpenSans-Medium.ttf") format("truetype");
+  src: url("/assets/fonts/OpenSans-Medium.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Open Sans";
-  src: url("/fonts/OpenSans-SemiBold.ttf") format("truetype");
+  src: url("/assets/fonts/OpenSans-SemiBold.ttf") format("truetype");
   font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Open Sans";
-  src: url("/fonts/OpenSans-Bold.ttf") format("truetype");
+  src: url("/assets/fonts/OpenSans-Bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
 }
@@ -151,7 +151,6 @@ a {
 
 ul,
 ol {
-  list-style: none;
   margin: 0px;
   padding: 0px;
 }
@@ -263,6 +262,8 @@ code {
 .mb-16 {
   margin-bottom: 16px;
 }
+
+
 
 .tbk-link {
   color: var(--tbk-red);
@@ -430,10 +431,16 @@ code {
   flex-direction: column;
 }
 
+.tbk-capture-section {
+  display: flex;
+  justify-content: space-between;
+}
+
 .tbk-refund-card {
   justify-content: space-between;
 }
 
+.tbk-button-container,
 .tbk-refund-button-container {
   display: flex;
   flex-direction: column;
@@ -1166,3 +1173,12 @@ code {
     display: none;
   }
 }
+
+.font-bold {
+  font-weight: 700;
+}
+
+.bullet-list {
+  margin-left: 20px;
+}
+
