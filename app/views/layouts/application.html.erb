@@ -18,10 +18,9 @@
     <link rel="apple-touch-icon" href="/icon.png">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <script src="/javascripts/highlight.min.js" defer></script>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-
+    <script src="/javascripts/highlight.min.js" defer></script>
     <script>
       document.addEventListener("turbo:load", function () {
         if (typeof hljs !== "undefined") {
@@ -29,7 +28,16 @@
             hljs.highlightElement(block);
           });
         } else {
-          console.warn("Highlight.js no está definido.");
+          // Reintentar después de un breve delay
+          setTimeout(() => {
+            if (typeof hljs !== "undefined") {
+              document.querySelectorAll('pre code').forEach((block) => {
+                hljs.highlightElement(block);
+              });
+            } else {
+              console.warn("Highlight.js sigue sin estar definido.");
+            }
+          }, 300);
         }
       });
     </script>
