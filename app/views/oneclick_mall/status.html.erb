@@ -1,0 +1,34 @@
+<%= render 'shared/breadcrumbs', breadcrumbs: [
+  { label: 'Inicio', path: root_path },
+  { label: 'Webpay Oneclick Mall', path: '/oneclick-mall/start' },
+  { label: 'Consultar estado de transacción', path: '/oneclick-mall/status' }
+] %>
+
+<h1>Webpay Oneclick Mall - Consultar estado de transacción</h1>
+<p class="mb-32">Puedes solicitar el estado de una transacción hasta 7 días después de su realización. No hay
+    límite
+    de solicitudes de este tipo durante ese período. Sin embargo, una vez pasados los 7 días, ya no podrás revisar
+    su estado.
+</p>
+
+<h2 id="request">Paso 1 - Petición:</h2>
+<p class="mb-32">
+    Para realizar la consulta, necesitarás el "buy_order" de la transacción de interés. Utiliza este identificador
+    para efectuar una llamada a MallTransaction.
+</p>
+
+<pre>
+  <code class="language-ruby">
+  @resp = @tx.status(@buy_order)
+  </code>
+</pre>
+
+<h2 id="response">Paso 2: Respuesta</h2>
+<p class="mb-32">
+    Transbank responderá con la siguiente información. Asegúrate de guardar esta respuesta, y la única validación
+    necesaria es que el campo "response_code" sea igual a cero.
+</p>
+
+<pre>
+  <code class="language-json"><%= JSON.pretty_generate(@respond_data) %></code>
+</pre>
