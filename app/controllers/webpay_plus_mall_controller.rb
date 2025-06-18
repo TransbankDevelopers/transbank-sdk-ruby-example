@@ -109,10 +109,6 @@ class WebpayPlusMallController < ApplicationController
     end
   end
 
-  def show_operations
-  end
-
-
   private
 
   def set_transbank_transaction
