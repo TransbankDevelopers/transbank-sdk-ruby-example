@@ -3,6 +3,20 @@
   <div class="table-column tbk-head">Valor</div>
   <% data.each do |campo, valor| %> 
     <div class="table-column"><%= campo %></div>
-    <div class="table-column"><%= valor %></div>
+    <div class="table-column">
+      <% if campo.to_s == "details" && valor.is_a?(Array) %>
+        <% valor.each_with_index do |detail, index| %>
+          <div style="margin-bottom: 1rem; padding: 0.5rem; border: 1px solid #eee; border-radius: 4px;">
+            <% detail.each do |key, val| %>
+              <div><strong><%= key %></strong>: <%= val %></div>
+            <% end %>
+          </div>
+        <% end %>
+      <% else %>
+        <%= valor %>
+      <% end %>
+    </div>
   <% end %>
 </div>
+
+

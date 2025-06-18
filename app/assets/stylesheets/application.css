@@ -348,7 +348,7 @@ code {
 
 .tbk-table {
   display: grid;
-  grid-template-columns: 262px 295px;
+  grid-template-columns: 200px 350px;
 }
 .tbk-table.auto-width {
   display: grid;
