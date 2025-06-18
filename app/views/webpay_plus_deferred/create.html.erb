@@ -1,9 +1,9 @@
 <%= render 'shared/breadcrumbs', breadcrumbs: [
   { label: 'Inicio', path: root_path },
-  { label: 'Webpay Plus', path: '/webpay-plus/create' }
+  { label: 'Webpay Plus Diferido', path: '/webpay-plus-diferido/create' }
 ] %>
 
-<h1>Webpay Plus - Creación de transacción</h1>
+<h1>Webpay Plus Diferido - Creación de transacción</h1>
 <p class="mb-32">
   En esta etapa, se procederá a la creación de una transacción con el fin de obtener un identificador único.
   Esto nos permitirá redirigir al Tarjetahabiente hacia el formulario de pago en el siguiente paso.
@@ -19,7 +19,6 @@
   <li>Comienza por importar la librería WebpayPlus en tu proyecto.</li>
   <li>Luego, crea una transacción utilizando las funciones proporcionadas mediante el SDK.</li>
 </ol>
-
 
 <pre>
   <code class="language-ruby">
@@ -87,4 +86,5 @@ HTML
     </div>
   </div>
 </form>
+
 

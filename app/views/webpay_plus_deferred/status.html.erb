@@ -1,10 +1,10 @@
 <%= render 'shared/breadcrumbs', breadcrumbs: [
   { label: 'Inicio', path: root_path },
-  { label: 'Webpay Plus', path: '/webpay-plus/create' },
-  { label: 'Consultar estado de transacción', path: '/webpay-plus/status' }
+  { label: 'Webpay Plus Diferido', path: '/webpay-plus-diferido/create' },
+  { label: 'Consultar estado de transacción', path: '/webpay-plus-diferido/status' }
 ] %>
 
-<h1>Webpay Plus - Consultar estado de transacción</h1>
+<h1>Webpay Plus Diferido - Consultar estado de transacción</h1>
 <p class="mb-32">
     Puedes solicitar el estado de una transacción hasta 7 días después de su realización. No hay
     límite de solicitudes de este tipo durante ese período. Sin embargo, una vez pasados los 7 días, ya no podrás revisar
@@ -28,7 +28,7 @@
   Una vez que hayas creado la transacción, aquí encontrarás los datos de respuesta generados por el proceso.
 </p>
 
-<pre class="mb-32">
+<pre>
   <code class="language-json"><%= JSON.pretty_generate(@respond_data) %></code>
 </pre>
 

@@ -151,7 +151,6 @@ a {
 
 ul,
 ol {
-  list-style: none;
   margin: 0px;
   padding: 0px;
 }
@@ -263,6 +262,8 @@ code {
 .mb-16 {
   margin-bottom: 16px;
 }
+
+
 
 .tbk-link {
   color: var(--tbk-red);
@@ -430,10 +431,16 @@ code {
   flex-direction: column;
 }
 
+.tbk-capture-section {
+  display: flex;
+  justify-content: space-between;
+}
+
 .tbk-refund-card {
   justify-content: space-between;
 }
 
+.tbk-button-container,
 .tbk-refund-button-container {
   display: flex;
   flex-direction: column;
@@ -1166,3 +1173,12 @@ code {
     display: none;
   }
 }
+
+.font-bold {
+  font-weight: 700;
+}
+
+.bullet-list {
+  margin-left: 20px;
+}
+

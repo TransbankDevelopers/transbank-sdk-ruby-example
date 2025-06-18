@@ -1,0 +1,58 @@
+<%= render 'shared/breadcrumbs', breadcrumbs: [
+  { label: 'Inicio', path: root_path },
+  { label: 'Webpay Plus Diferido', path: '/webpay-plus-diferido/create' },
+  { label: 'Capturar transacción diferida', path: '/webpay-plus-diferido/capture' }
+] %>
+
+<h1>Webpay Plus Diferido - Capturar transacción diferida</h1>
+<p class="mb-32">
+  En este paso debemos capturar la transacción para realmente capturar el dinero que había sido previamente
+  reservado al hacer la transacción.
+</p>
+
+<h2 id="request">Paso 1: Petición</h2>
+<p class="mb-32">
+  Para capturar una transacción necesitaremos el Token, Orden de compra, Código de autorización y monto a
+  capturar. Se hace de la siguiente manera.
+</p>
+
+<pre>
+  <code class="language-ruby">
+  @resp = @tx.capture(@token, @buy_order, @authorization_code, @amount)  
+  </code>
+</pre>
+
+  <h2 id="response">Paso 2: Respuesta</h2>
+  <p class="mb-32">
+    Transbank contestará con lo siguiente. Debes guardar esta información, lo único que debes validar
+    es que response_code sea igual a cero.
+  </p>
+
+<pre>
+  <code class="language-json"><%= JSON.pretty_generate(@respond_data) %></code>
+</pre>
+
+<h2 id="operations">Otras utilidades</h2>
+<p class="mb-32">
+  Luego de capturada la transacción puedes Reembolsar (reversar o anular) el pago dependiendo 
+  de ciertas condiciones comerciales (Reversa en las primeras 3 horas de la captura, anulación posterior a eso). 
+  También puedes consultar el estado de la transacción hasta 7 días después de realizada.
+</p>
+
+<form action="<%=webpay_deferred_refund_url %>" method="GET">
+  <%= hidden_field_tag :token, @token, class: "tbk-input-text" %> 
+  <div class="tbk-refund-card mb-32">
+    <div class="input-container">
+      <label class="tbk-label" for="amount" >Monto a reembolsar:</label>
+      <input type="text" name="amount" class="tbk-input-text" value="<%= @respond_data[:captured_amount] %>" />
+    </div>
+    <div class="tbk-refund-button-container">
+    </div>
+    
+    <div class="tbk-refund-button-container">
+      <button class="tbk-button primary">REEMBOLSAR</button>
+      <%= link_to "CONSULTAR ESTADO", webpay_deferred_status_url(token: @token), class: "tbk-button primary" %>
+    </div>
+  </div>
+</form>  
+

@@ -1,10 +1,10 @@
 <%= render 'shared/breadcrumbs', breadcrumbs: [
   { label: 'Inicio', path: root_path },
-  { label: 'Webpay Plus', path: '/webpay-plus/create' },
-  { label: 'Confirmar transacción', path: '/webpay-plus/commit' }
+  { label: 'Webpay Plus Diferido', path: '/webpay-plus-diferido/create' },
+  { label: 'Confirmar transacción', path: '/webpay-plus-diferido/commit' }
 ] %>
 
-  <h1>Webpay Plus - Confirmar transacción</h1>
+  <h1>Webpay Plus Diferido - Confirmar transacción</h1>
 
   <p class="mb-32">
     En este paso es importante confirmar la transacción para notificar a Transbank que hemos recibido exitosamente los detalles de la transacción.
@@ -45,34 +45,32 @@
   <code class="language-json"><%= JSON.pretty_generate(@respond_data) %></code>
 </pre>
 
-  <h2>¡Listo!</h2>
-  <p class="mb-32">
-    Con la confirmación exitosa, ya puedes mostrar al usuario una página de éxito de la transacción, proporcionándole la tranquilidad de que el proceso ha sido completado con éxito.
-  </p>
+<%= render "messages/commit_deferred_message"  %>
 
-  <p class="mb-16" id="operations">
-    Después de confirmar la transacción, podrás realizar otras operaciones útiles:
-  </p>
-  <ul class="bullet-list mb-32">
-    <li><span class="fw-700">Reembolsar:</span> Puedes reversar o anular el pago según ciertas condiciones comerciales.</li>
-    <li><span class="fw-700">Consultar Estado:</span> Hasta 7 días después de la transacción, podrás consultar el estado de la transacción.</li>
-  </ul>
-
-<form action="<%=webpay_plus_refund_url %>" method="GET">
+<form action="<%=webpay_deferred_capture_url %>" method="GET">
   <%= hidden_field_tag :token, @token, class: "tbk-input-text" %> 
-  <div class="tbk-refund-card mb-32">
-    <div class="input-container">
-      <label class="tbk-label" for="amount" >Monto a reembolsar:</label>
-      <input type="text" id="amount" name="amount" class="tbk-input-text" value="<%= @respond_data[:amount] %>" />
+  <%= hidden_field_tag :authorization_code, @respond_data[:authorization_code], class: "tbk-input-text" %> 
+  <%= hidden_field_tag :buy_order, @respond_data[:buy_order], class: "tbk-input-text" %> 
+  <div class="tbk-card mb-32">
+    <div class="tbk-button-container">
+       <p class="mb-32">Capturar la transacción para realmente capturar el dinero que habia sido previamente
+                reservado.</p>
     </div>
-    <div class="tbk-refund-button-container">
+    <div class="tbk-capture-section">
+        <div class="input-container">
+          <label class="tbk-label" for="amount" >Monto a capturar:</label>
+          <input type="text" name="amount" class="tbk-input-text" value="<%= @respond_data[:amount] %>" />
+        </div>
+        <div class="tbk-button-container">
+        </div>
+        <div class="tbk-button-container">
+          <button class="tbk-button primary">CAPTURAR</button>
+          <%= link_to "CONSULTAR ESTADO", webpay_deferred_status_url(token: @token), class: "tbk-button primary" %>
+        </div>
     </div>
-    
-    <div class="tbk-refund-button-container">
-      <button class="tbk-button primary">REEMBOLSAR</button>
-      <%= link_to "CONSULTAR ESTADO", webpay_plus_status_url(token: @token), class: "tbk-button primary" %>
-    </div>
+
   </div>
 </form>
+
 
 
