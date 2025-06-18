@@ -348,7 +348,7 @@ code {
 
 .tbk-table {
   display: grid;
-  grid-template-columns: 262px 295px;
+  grid-template-columns: 200px 350px;
 }
 .tbk-table.auto-width {
   display: grid;
@@ -1182,3 +1182,9 @@ code {
   margin-left: 20px;
 }
 
+.details-item {
+  margin-bottom: 1rem; 
+  padding: 0.5rem; 
+  border: 1px solid #eee; 
+  border-radius: 4px;
+}
