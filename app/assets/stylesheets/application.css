@@ -1182,3 +1182,9 @@ code {
   margin-left: 20px;
 }
 
+.detail-item {
+  margin-bottom: 1rem; 
+  padding: 0.5rem; 
+  border: 1px solid #eee; 
+  border-radius: 4px;
+}
