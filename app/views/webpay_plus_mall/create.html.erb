@@ -22,12 +22,6 @@
 
 <pre>
   <code class="language-ruby">
-  require 'transbank/sdk/webpay/webpay_plus/transaction'
-  include Transbank::Webpay::WebpayPlus
-
-  options = Options.new(API_KEY, COMMERCE_CODE, Options::ENVIRONMENT_INTEGRATION)
-  @transaction = MallTransaction.new(options)
-
   details = [
     {
         "amount"=>"1000",
@@ -40,8 +34,9 @@
         "buy_order"=>"ordenCompraDetalle1234"
     }
   ]
-
-  @resp = @tx.create(buy_order, session_id, return_url, details)
+  options = Transbank::Webpay::Options.new(commerce_code, api_key, environment)
+  @transaction = Transbank::Webpay::WebpayPlus::MallTransaction.new(options)
+  @resp = @transaction.create(buy_order, session_id, return_url, details)
   </code>
 </pre>
 

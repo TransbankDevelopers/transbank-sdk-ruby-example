@@ -54,7 +54,7 @@ Rails.application.routes.draw do
 
   # --- Oneclick Mall ---
   # Controladores: OneclickMallController
-  get "oneclick-mall/start", to: "oneclick_mall#start", as: :oneclick_mall_start # Acción renombrada a snake_case
+  get "oneclick-mall/start", to: "oneclick_mall#start", as: :oneclick_mall_start 
   get "oneclick-mall/finish", to: "oneclick_mall#finish", as: :oneclick_mall_finish
   get "oneclick-mall/authorize", to: "oneclick_mall#authorize", as: :oneclick_mall_authorize
   get "oneclick-mall/delete", to: "oneclick_mall#delete", as: :oneclick_mall_delete
