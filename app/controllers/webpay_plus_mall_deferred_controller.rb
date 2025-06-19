@@ -4,6 +4,7 @@ class WebpayPlusMallDeferredController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [ :commit, :refund ]
 
   PRODUCT = "Webpay Plus".freeze
+  ERROR_PAGE = "shared/error_page".freeze
   logger = Logger.new(STDOUT)
 
   before_action :set_transbank_transaction
@@ -35,7 +36,7 @@ class WebpayPlusMallDeferredController < ApplicationController
     rescue StandardError => e
       logger.error(e)
       flash[:alert] = "Ocurrió un error inesperado: #{e.message}"
-      render "shared/error_page", locals: { error: e.message }
+      render ERROR_PAGE, locals: { error: e.message }
     end
   end
 
@@ -70,7 +71,7 @@ class WebpayPlusMallDeferredController < ApplicationController
     rescue StandardError => e
       logger.error(e)
       flash[:alert] = "Ocurrió un error inesperado en commit: #{e.message}"
-      render "shared/error_page", locals: { error: e.message }
+      render ERROR_PAGE, locals: { error: e.message }
     end
   end
 
@@ -90,7 +91,7 @@ class WebpayPlusMallDeferredController < ApplicationController
     rescue StandardError => e
       logger.error(e)
       flash[:alert] = "Ocurrió un error inesperado en refund: #{e.message}"
-      render "shared/error_page", locals: { error: e.message }
+      render ERROR_PAGE, locals: { error: e.message }
     end
   end
 
@@ -104,7 +105,7 @@ class WebpayPlusMallDeferredController < ApplicationController
       logger.error(e)
       flash[:alert] = "Ocurrió un error inesperado en status: #{e.message}"
       @resp = nil
-      render "shared/error_page", locals: { error: e.message }
+      render ERROR_PAGE, locals: { error: e.message }
     end
   end
 
@@ -122,13 +123,9 @@ class WebpayPlusMallDeferredController < ApplicationController
       logger.error(e)
       flash[:alert] = "Ocurrió un error inesperado en capture: #{e.message}"
       @resp = nil
-      render "shared/error_page", locals: { error: e.message }
+      render ERROR_PAGE, locals: { error: e.message }
     end
   end
-
-  def show_operations
-  end
-
 
   private
 
