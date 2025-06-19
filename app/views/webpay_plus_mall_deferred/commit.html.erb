@@ -1,0 +1,63 @@
+<%= render 'shared/breadcrumbs', breadcrumbs: [
+  { label: 'Inicio', path: root_path },
+  { label: 'Webpay Mall Diferido', path: '/webpay-mall-diferido/create' },
+  { label: 'Confirmar transacción', path: '/webpay-mall-diferido/commit' }
+] %>
+
+<h1>Webpay Mall Diferido - Confirmar transacción</h1>
+
+<p class="mb-32">
+  En este paso es importante confirmar la transacción para notificar a Transbank que hemos recibido exitosamente los detalles de la transacción.
+  <b>Es importante destacar que si la confirmación no se realiza, la transacción será caducada.</b>
+</p>
+
+<h2 id="data">Paso 1 - Datos recibidos:</h2>
+<ul class="mb-32">
+  <p class="m-32">
+    Después de completar el flujo en el formulario de pago, recibirás un GET con la siguiente información:
+  </p>
+</ul>
+
+<pre>
+  <code class="language-ruby">
+  <%=@returnUrl%>?token_ws=<%=@token%>
+  </code>
+</pre>
+
+<h2 id="request">Paso 2 - Petición:</h2>
+<p class="mb-32">
+  Utilizarás el token recibido para confirmar la transacción mediante el SDK.
+</p>
+
+<pre>
+  <code class="language-ruby">
+  @resp = @transaction.commit(@token)
+  </code>
+</pre>
+
+<h2 id="response">Paso 3 - Respuesta:</h2>
+<p class="mb-32">
+  Una vez que la transacción ha sido confirmada, Transbank proporcionará la siguiente información. 
+  Es fundamental conservar esta respuesta y verificar que el campo "response_code" tenga un valor de cero y que el campo "status" sea "AUTHORIZED".
+</p>
+
+<pre>
+  <code class="language-json"><%= JSON.pretty_generate(@respond_data) %></code>
+</pre>
+
+<%= render "messages/commit_deferred_message"  %>
+
+<%= render "capture_form", 
+            action: webpay_mall_deferred_capture_url, 
+            token: @token, 
+            detail: @respond_data[:details][0] %>
+
+<%= render "capture_form", 
+            action: webpay_mall_deferred_capture_url, 
+            token: @token, 
+            detail: @respond_data[:details][1] %>
+
+<%= link_to "CONSULTAR ESTADO", webpay_mall_deferred_status_url(token: @token), class: "tbk-button primary" %>
+
+
+

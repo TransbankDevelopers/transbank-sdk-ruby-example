@@ -1,0 +1,18 @@
+<form action="<%= action %>" method="GET">
+  <%= hidden_field_tag :token, token %> 
+  <%= hidden_field_tag :authorization_code, detail[:authorization_code] %> 
+  <%= hidden_field_tag :commerce_code, detail[:commerce_code] %> 
+  <%= hidden_field_tag :buy_order, detail[:buy_order] %> 
+
+  <div class="tbk-card mb-32">
+    <div class="tbk-capture-section">
+      <div class="input-container">
+        <label class="tbk-label" for="amount">Monto a capturar:</label>
+        <input type="text" name="amount" class="tbk-input-text" value="<%= detail[:amount] %>" />
+      </div>
+      <div class="tbk-button-container">
+        <button class="tbk-button primary">CAPTURAR</button>
+      </div>
+    </div>
+  </div>
+</form>
