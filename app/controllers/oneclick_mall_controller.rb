@@ -2,7 +2,7 @@ class OneclickMallController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   logger = Logger.new(STDOUT)
-
+  ERROR_PAGE = "shared/error_page".freeze
   before_action :set_transbank_transaction
 
   def start
@@ -23,7 +23,7 @@ class OneclickMallController < ApplicationController
     rescue StandardError => e
       logger.error(e)
       flash[:alert] = "Ocurrió un error inesperado: #{e.message}"
-      render "shared/error_page", locals: { error: e.message }
+      render ERROR_PAGE, locals: { error: e.message }
     end
   end
 
@@ -46,7 +46,7 @@ class OneclickMallController < ApplicationController
     rescue StandardError => e
       logger.error(e)
       flash[:alert] = "Ocurrió un error inesperado: #{e.message}"
-      render "shared/error_page", locals: { error: e.message }
+      render ERROR_PAGE, locals: { error: e.message }
     end
   end
 
@@ -60,7 +60,7 @@ class OneclickMallController < ApplicationController
     rescue StandardError => e
       logger.error(e)
       flash[:alert] = "Ocurrió un error inesperado: #{e.message}"
-      render "shared/error_page", locals: { error: e.message }
+      render ERROR_PAGE, locals: { error: e.message }
     end
   end
 
@@ -95,7 +95,7 @@ class OneclickMallController < ApplicationController
     rescue StandardError => e
       logger.error(e)
       flash[:alert] = "Ocurrió un error inesperado: #{e.message}"
-      render "shared/error_page", locals: { error: e.message }
+      render ERROR_PAGE, locals: { error: e.message }
     end
   end
 
@@ -108,7 +108,7 @@ class OneclickMallController < ApplicationController
     rescue StandardError => e
       logger.error(e)
       flash[:alert] = "Ocurrió un error inesperado: #{e.message}"
-      render "shared/error_page", locals: { error: e.message }
+      render ERROR_PAGE, locals: { error: e.message }
     end
   end
 
@@ -124,7 +124,7 @@ class OneclickMallController < ApplicationController
     rescue StandardError => e
       logger.error(e)
       flash[:alert] = "Ocurrió un error inesperado: #{e.message}"
-      render "shared/error_page", locals: { error: e.message }
+      render ERROR_PAGE, locals: { error: e.message }
     end
   end
 
