@@ -18,9 +18,7 @@
 
   <pre>
   <code class="language-ruby">
-   @inscription = Transbank::Webpay::Oneclick::MallInscription.new(
-      ::Transbank::Common::IntegrationCommerceCodes::ONECLICK_MALL, 
-      ::Transbank::Common::IntegrationApiKeys::WEBPAY, :integration)
+    @inscription = Transbank::Webpay::Oneclick::MallInscription.new(commerce_code, api_key, environment)
     @resp =@inscription.start(
       user_name,
       email,
