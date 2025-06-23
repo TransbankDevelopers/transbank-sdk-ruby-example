@@ -28,15 +28,16 @@ class WebpayPlusController < ApplicationController
 
   def commit
     begin
+      @request_data = params
+      @product_name = PRODUCT
+      @create_url = webpay_plus_create_url
       if params.key?("TBK_TOKEN") && params.key?("token_ws")
         @view_template = "error/webpay/form_error"
-        @request_data = params
-        @product_name = PRODUCT
       elsif params.key?("TBK_TOKEN")
         # Pago abortado
         @view_template = "error/webpay/aborted"
-        @request_data = params
         @resp = @tx.status(params["TBK_TOKEN"])
+        @respond_data = @resp.with_indifferent_access
       elsif params.key?("token_ws")
         # Flujo normal: 'webpay.commit'
         @resp = @tx.commit(params["token_ws"])
@@ -47,10 +48,7 @@ class WebpayPlusController < ApplicationController
       else
         # Timeout o un caso no manejado
         @view_template = "error/webpay/timeout"
-        @request_data = params
-        @product_name = PRODUCT
       end
-
 
       render @view_template
 
