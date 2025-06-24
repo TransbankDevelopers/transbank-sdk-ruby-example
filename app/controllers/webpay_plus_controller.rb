@@ -28,7 +28,7 @@ class WebpayPlusController < ApplicationController
 
   def commit
     begin
-      @request_data = params
+      @request_data = params.except(:controller, :action)
       @product_name = PRODUCT
       @create_url = webpay_plus_create_url
       if params.key?("TBK_TOKEN") && params.key?("token_ws")
@@ -54,7 +54,6 @@ class WebpayPlusController < ApplicationController
 
     rescue StandardError => e
       logger.error(e)
-      flash[:alert] = "Ocurrió un error inesperado en commit: #{e.message}"
       render "shared/error_page", locals: { error: e.message }
     end
   end
