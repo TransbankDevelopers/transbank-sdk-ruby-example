@@ -45,18 +45,18 @@
   <code class="language-json"><%= JSON.pretty_generate(@respond_data) %></code>
 </pre>
 
-  <h2>¡Listo!</h2>
-  <p class="mb-32">
-    Con la confirmación exitosa, ya puedes mostrar al usuario una página de éxito de la transacción, proporcionándole la tranquilidad de que el proceso ha sido completado con éxito.
-  </p>
+<h2>¡Listo!</h2>
+<p class="mb-32">
+  Con la confirmación exitosa, ya puedes mostrar al usuario una página de éxito de la transacción, proporcionándole la tranquilidad de que el proceso ha sido completado con éxito.
+</p>
 
-  <p class="mb-16" id="operations">
-    Después de confirmar la transacción, podrás realizar otras operaciones útiles:
-  </p>
-  <ul class="bullet-list mb-32">
-    <li><span class="fw-700">Reembolsar:</span> Puedes reversar o anular el pago según ciertas condiciones comerciales.</li>
-    <li><span class="fw-700">Consultar Estado:</span> Hasta 7 días después de la transacción, podrás consultar el estado de la transacción.</li>
-  </ul>
+<p class="mb-16" id="operations">
+  Después de confirmar la transacción, podrás realizar otras operaciones útiles:
+</p>
+<ul class="bullet-list mb-32">
+  <li><span class="fw-700">Reembolsar:</span> Puedes reversar o anular el pago según ciertas condiciones comerciales.</li>
+  <li><span class="fw-700">Consultar Estado:</span> Hasta 7 días después de la transacción, podrás consultar el estado de la transacción.</li>
+</ul>
 
 <form action="<%=webpay_plus_refund_url %>" method="GET">
   <%= hidden_field_tag :token, @token, class: "tbk-input-text" %> 
