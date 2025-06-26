@@ -53,8 +53,7 @@
     
     <div class="tbk-refund-button-container">
       <button class="tbk-button primary">REEMBOLSAR</button>
-      <%= link_to "CONSULTAR ESTADO", oneclick_mall_deferred_status_url(token: @token), class: "tbk-button primary" %>
+      <%= link_to "CONSULTAR ESTADO", oneclick_mall_deferred_status_url(buy_order: @buy_order), class: "tbk-button primary" %>
     </div>
   </div>
 </form>  
-
