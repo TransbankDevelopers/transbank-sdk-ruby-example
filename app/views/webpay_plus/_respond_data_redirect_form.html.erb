@@ -1,0 +1,10 @@
+<form action="<%= @respond_data[:url] %>" method="POST">
+  <div class="tbk-card">
+    <span class="tbk-card-title">Formulario de redirección</span>
+    <label class="tbk-label" for="token_ws">Token</label>
+    <input type="text" name="token_ws" class="tbk-input-text" value="<%= @respond_data[:token] %>" />
+    <div class="tbk-card-footer">
+      <button class="tbk-button primary">PAGAR</button>
+    </div>
+  </div>
+</form>
