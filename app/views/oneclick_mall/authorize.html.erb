@@ -1,0 +1,102 @@
+<%= render 'shared/breadcrumbs', breadcrumbs: [
+  { label: 'Inicio', path: root_path },
+  { label: 'Webpay Oneclick Mall', path: '/oneclick-mall/start' },
+  { label: 'Autorizar pago', path: '/oneclick-mall/authorize' }
+] %>
+
+
+<h1>Webpay Oneclick Mall - Autorizar pago</h1>
+<p class="mb-32">
+  En este primer paso, procederemos a autorizar una transacción en la tarjeta que ha sido previamente inscrita.
+</p>
+
+<h2 id="request">Paso 1: Petición</h2>
+<p class="mb-32">
+  Ahora que contamos con el "username" y el "tbk_user" obtenidos durante la inscripción, estamos listos para
+  autorizar transacciones en la tarjeta inscrita.
+</p>
+
+<pre>
+  <code class="language-ruby">
+    @details =[
+        {
+          commerce_code: "child_commerce_code",
+          buy_order: "child_buy_order",
+          amount: 1000,
+          installments_number: 0
+        },
+        {
+          commerce_code: "child_commerce_code2",
+          buy_order: "child_buy_order2",
+          amount: 5000,
+          installments_number: 0
+        }
+      ]
+    @resp = @tx.authorize(@username, @tbk_user, @buy_order, @details)
+  </code>
+</pre>
+
+<h2 id="response">Paso 2: Respuesta</h2>
+<p class="mb-32">
+  Una vez que la transacción ha sido autorizada Transbank proporcionará la siguiente información. 
+  Es fundamental conservar esta respuesta y verificar que el campo "response_code" 
+  tenga un valor de cero y que el campo "status" sea "AUTHORIZED".
+</p>
+
+<pre>
+  <code class="language-json"><%= JSON.pretty_generate(@respond_data) %></code>
+</pre>
+
+<h2>¡Listo!</h2>
+<p class="mb-32">
+  Con la autorización exitosa, puedes mostrar al usuario una página de éxito de la transacción, proporcionándole
+  la confirmación de que el proceso se ha completado con éxito.
+</p>
+
+<p class="mb-32">
+  Después de autorizar la transacción, considera las siguientes utilidades adicionales:
+</p>
+
+<ul class="bullet-list mb-32">
+  <li>
+    <span class="fw-700">Reembolsar:</span> Puedes reversar o anular el pago según ciertas condiciones
+    comerciales.
+  </li>
+  <li>
+    <span class="fw-700">Consultar Estado:</span> Hasta 7 días después de la transacción, podrás consultar el
+    estado de la transacción.
+  </li>
+</ul>
+
+<% @respond_data[:details].each do |detail| %>
+  <%= form_with url: oneclick_mall_refund_path, method: :get do %>
+    <div class="tbk-card">
+      <div class="card-multi-field">
+        <div class="input-container">
+          <%= label_tag :buy_order, "Orden compra:", class: "tbk-label" %>
+          <%= text_field_tag :buy_order, @respond_data[:buy_order], class: "tbk-input-text" %>
+        </div>
+        <div class="input-container">
+          <%= label_tag :child_commerce_code, "Código de comercio:", class: "tbk-label" %>
+          <%= text_field_tag :child_commerce_code, detail[:commerce_code], class: "tbk-input-text" %>
+        </div>
+        <div class="input-container">
+          <%= label_tag :child_buy_order, "Orden de compra (tienda hija):", class: "tbk-label" %>
+          <%= text_field_tag :child_buy_order, detail[:buy_order], class: "tbk-input-text" %>
+        </div>
+        <div class="input-container">
+          <%= label_tag :amount, "Monto a reembolsar:", class: "tbk-label" %>
+          <%= text_field_tag :amount, detail[:amount], class: "tbk-input-text" %>
+        </div>
+      </div>
+      <div class="tbk-card-footer">
+        <%= submit_tag "REEMBOLSAR", class: "tbk-button primary" %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+<%= link_to "CONSULTAR ESTADO",
+            oneclick_mall_status_url(buy_order: @respond_data[:buy_order]),
+            class: "tbk-button primary mb-32" %>
+
