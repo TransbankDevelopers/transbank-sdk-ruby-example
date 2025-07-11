@@ -35,7 +35,7 @@
 </p>
 
 <pre>
-  <code class="language-json"><%= JSON.pretty_generate(@respond_data) %></code>
+  <code id="respond-data-json" class="language-json"><%= JSON.pretty_generate(@respond_data) %></code>
 </pre>
 
 <h2 id="form">Paso 3: Creación del formulario</h2>
@@ -81,10 +81,26 @@ HTML
   <div class="tbk-card">
     <span class="tbk-card-title">Formulario de redirección</span>
     <label class="tbk-label" for="token_ws">Token</label>
-    <input type="text" name="token_ws" class="tbk-input-text" value="<%= @respond_data[:token] %>" />
+    <input id="token-input" type="text" name="token_ws" class="tbk-input-text" value="<%= @respond_data[:token] %>" />
     <div class="tbk-card-footer">
       <button class="tbk-button primary">PAGAR</button>
     </div>
   </div>
 </form>
 
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    function updateRespondData() {
+      fetch("<%= refresh_webpay_plus_json_path %>")
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById("respond-data-json").textContent = JSON.stringify(data, null, 2);
+          document.getElementById("token-input").value = data.token || "";
+        })
+        .catch(error => console.error("Error al actualizar los datos"));
+    }
+   
+    setInterval(updateRespondData, 300000);
+    updateRespondData();
+  });
+</script>
