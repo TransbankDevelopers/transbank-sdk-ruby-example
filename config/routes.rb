@@ -9,11 +9,11 @@ Rails.application.routes.draw do
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-resources :webpay_plus do
-  collection do
-    post :refresh
-  end
-end
+
+  get 'webpay-plus/refresh_respond_data_json', to: 'webpay_plus#refresh_respond_data_json', as: :refresh_webpay_plus_json
+  get '"webpay-mall/refresh_respond_data_json', to: 'webpay_plus_mall#refresh_respond_data_json', as: :refresh_webpay_mall_json
+  get 'webpay-plus-diferido/refresh_respond_data_json', to: 'webpay_plus_deferred#refresh_respond_data_json', as: :refresh_webpay_plus_deferred_json
+  get 'webpay-mall-diferido/refresh_respond_data_json', to: 'webpay_plus_mall_deferred#refresh_respond_data_json', as: :refresh_webpay_mall_deferred_json
   root to: "product_index#index"
 
   get "/oneclick-mall", to: "home#oneclick_mall", as: :oneclick_mall

@@ -108,7 +108,35 @@ class WebpayPlusMallController < ApplicationController
     end
   end
 
+  def refresh_respond_data_json
+    @respond_data = crear_transaccion.with_indifferent_access
+    render json: @respond_data
+  end
+
   private
+
+  def crear_transaccion
+    @details =[
+      {
+        "amount"=>"1000",
+        "commerce_code"=>::Transbank::Common::IntegrationCommerceCodes::WEBPAY_PLUS_MALL_CHILD1,
+        "buy_order"=>"childBuyOrder1_#{rand(1000)}"
+      },
+      {
+        "amount"=>"2000",
+        "commerce_code"=>::Transbank::Common::IntegrationCommerceCodes::WEBPAY_PLUS_MALL_CHILD2,
+        "buy_order"=>"childBuyOrder2_#{rand(1000)}"
+      }
+      ]
+      create_tx = {
+        buy_order: "O-#{SecureRandom.random_number(1..10000)}",
+        session_id: "S-#{SecureRandom.random_number(1..10000)}",
+        return_url: webpay_mall_commit_url,
+        amount: SecureRandom.random_number(1000..2000),
+        details: @details
+      }
+    @resp = @tx.create(create_tx[:buy_order], create_tx[:session_id], create_tx[:return_url], @details)
+  end
 
   def set_transbank_transaction
     environment = :integration
