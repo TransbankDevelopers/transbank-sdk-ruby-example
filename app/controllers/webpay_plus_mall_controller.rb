@@ -109,13 +109,13 @@ class WebpayPlusMallController < ApplicationController
   end
 
   def refresh_respond_data_json
-    @respond_data = crear_transaccion.with_indifferent_access
+    @respond_data = create_transaction.with_indifferent_access
     render json: @respond_data
   end
 
   private
 
-  def crear_transaccion
+  def create_transaction
     @details =[
       {
         "amount"=>"1000",
