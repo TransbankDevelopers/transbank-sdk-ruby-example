@@ -107,7 +107,22 @@ class WebpayPlusDeferredController < ApplicationController
     end
   end
 
+  def refresh_respond_data_json
+    @respond_data = create_transaction.with_indifferent_access
+    render json: @respond_data
+  end
+  
   private
+
+  def create_transaction
+   create_tx = {
+      buy_order: "O-#{SecureRandom.random_number(1..10000)}",
+      session_id: "S-#{SecureRandom.random_number(1..10000)}",
+      return_url: webpay_deferred_commit_url,
+      amount: SecureRandom.random_number(1000..2000)
+    }
+    @resp = @tx.create(create_tx[:buy_order], create_tx[:session_id], create_tx[:amount], create_tx[:return_url])
+  end
 
   def set_transbank_transaction
     environment = :integration
