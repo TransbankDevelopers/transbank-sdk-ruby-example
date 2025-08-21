@@ -380,17 +380,17 @@ DEPENDENCIES
   capybara
   debug
   dotenv-rails
-  importmap-rails
+  importmap-rails (>= 2.2.0)
   jbuilder
   kamal
-  propshaft
+  propshaft (>= 1.2.0)
   puma (>= 5.0)
   rails (~> 8.0.2, >= 8.0.2.1)
   rubocop-rails-omakase
   selenium-webdriver
   solid_cable (>= 3.0.12)
   solid_cache
-  solid_queue (>= 1.2.0)
+  solid_queue (>= 1.2.1)
   sqlite3 (>= 2.1)
   stimulus-rails
   thruster
