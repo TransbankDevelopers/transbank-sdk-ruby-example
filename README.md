@@ -23,7 +23,7 @@ npm install
 Para poder correr el proyecto en modo desarrollo, debes utilizar el siguiente comando en una consola:
 
 ```bash
-Rails s
+rails s
 ```
 
 ## Ejecución Producción
