@@ -14,7 +14,7 @@ Proyecto de ejemplo mostrando el paso a paso de como usar el SDK RUBY de transba
 Una vez tengas clonado el repositorio, debes instalar las dependencias del proyecto. Corre los siguientes comandos en una terminal para instalar las dependencias:
 
 ```bash
-Bundle install
+bundle install
 npm install
 ```
 
@@ -35,7 +35,7 @@ RAILS_ENV=production
 SECRET_KEY_BASE=xxxx
 ```
 
-2. Compilar los estáticos 
+2. Compilar los estáticos
 
 ```bash
 RAILS_ENV=production bin/rails assets:clobber
