@@ -36,14 +36,14 @@ Rails.application.routes.draw do
   # --- Webpay Plus Mall ---
   # Controladores: WebpayPlusMallController
   get "webpay-mall/create", to: "webpay_plus_mall#create", as: :webpay_mall_create
-  get "webpay-mall/commit", to: "webpay_plus_mall#commit", as: :webpay_mall_commit
+  match "webpay-mall/commit", to: "webpay_plus_mall#commit", via: [ :get, :post ], as: :webpay_mall_commit
   get "webpay-mall/refund", to: "webpay_plus_mall#refund", as: :webpay_mall_refund
   get "webpay-mall/status", to: "webpay_plus_mall#status", as: :webpay_mall_status
 
   # --- Webpay Plus Diferido ---
   # Controladores: WebpayPlusDeferredController
   get "webpay-plus-diferido/create", to: "webpay_plus_deferred#create", as: :webpay_deferred_create
-  get "webpay-plus-diferido/commit", to: "webpay_plus_deferred#commit", as: :webpay_deferred_commit
+  match "webpay-plus-diferido/commit", to: "webpay_plus_deferred#commit", via: [ :get, :post ], as: :webpay_deferred_commit
   get "webpay-plus-diferido/capture", to: "webpay_plus_deferred#capture", as: :webpay_deferred_capture
   get "webpay-plus-diferido/refund", to: "webpay_plus_deferred#refund", as: :webpay_deferred_refund
   get "webpay-plus-diferido/status", to: "webpay_plus_deferred#status", as: :webpay_deferred_status
@@ -51,7 +51,7 @@ Rails.application.routes.draw do
   # --- Webpay Plus Mall Diferido ---
   # Controladores: WebpayPlusMallDeferredController
   get "webpay-mall-diferido/create", to: "webpay_plus_mall_deferred#create", as: :webpay_mall_deferred_create
-  get "webpay-mall-diferido/commit", to: "webpay_plus_mall_deferred#commit", as: :webpay_mall_deferred_commit
+  match "webpay-mall-diferido/commit", to: "webpay_plus_mall_deferred#commit", via: [ :get, :post ], as: :webpay_mall_deferred_commit
   get "webpay-mall-diferido/capture", to: "webpay_plus_mall_deferred#capture", as: :webpay_mall_deferred_capture
   get "webpay-mall-diferido/refund", to: "webpay_plus_mall_deferred#refund", as: :webpay_mall_deferred_refund
   get "webpay-mall-diferido/status", to: "webpay_plus_mall_deferred#status", as: :webpay_mall_deferred_status

@@ -42,7 +42,7 @@ class WebpayPlusMallController < ApplicationController
 
   def commit
     begin
-      @request_data = params
+      @request_data = params.except(:controller, :action)
       @product_name = PRODUCT
       @create_url = webpay_mall_create_url
       if params.key?("TBK_TOKEN") && params.key?("token_ws")
