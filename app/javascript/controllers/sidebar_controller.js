@@ -11,10 +11,8 @@ export default class extends Controller {
   ];
 
   connect() {
-    console.log("Sidebar controller connected");
     this.isMenuVisible = true;
     this.bodyContainer = document.querySelector(".body-container");
-    console.log(this.bodyContainer);
 
     this.highlightActiveByUrl();
   }
