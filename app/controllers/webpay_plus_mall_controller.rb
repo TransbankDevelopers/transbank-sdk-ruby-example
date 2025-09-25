@@ -27,7 +27,6 @@ class WebpayPlusMallController < ApplicationController
         buy_order: "O-#{SecureRandom.random_number(1..10000)}",
         session_id: "S-#{SecureRandom.random_number(1..10000)}",
         return_url: webpay_mall_commit_url,
-        amount: SecureRandom.random_number(1000..2000),
         details: @details
       }
       @resp = @tx.create(create_tx[:buy_order], create_tx[:session_id], create_tx[:return_url], @details)
