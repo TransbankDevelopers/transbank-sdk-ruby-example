@@ -18,28 +18,9 @@
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "highlight", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-    <script src="/javascripts/highlight.min.js" defer></script>
-    <script>
-      document.addEventListener("turbo:load", function () {
-        if (typeof hljs !== "undefined") {
-          document.querySelectorAll('pre code').forEach((block) => {
-            hljs.highlightElement(block);
-          });
-        } else {
-          // Reintentar después de un breve delay
-          setTimeout(() => {
-            if (typeof hljs !== "undefined") {
-              document.querySelectorAll('pre code').forEach((block) => {
-                hljs.highlightElement(block);
-              });
-            } else {
-              console.warn("Highlight.js sigue sin estar definido.");
-            }
-          }, 300);
-        }
-      });
-    </script>
+    
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-JLR1LJY89P"></script>
