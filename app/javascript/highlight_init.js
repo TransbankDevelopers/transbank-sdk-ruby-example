@@ -1,13 +1,25 @@
 import hljs from "highlight.js";
 
-document.addEventListener("turbo:render", function () {
-  document.querySelectorAll("pre code").forEach((block) => {
+function applyHighlight() {
+  for (const block of document.querySelectorAll("pre code")) {
+    block.classList.remove("hljs");
+    delete block.dataset.highlighted;
+
     hljs.highlightElement(block);
-  });
+  }
+}
+
+// Para carga inicial (sin Turbo)
+document.addEventListener("DOMContentLoaded", function () {
+  applyHighlight();
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-  document.querySelectorAll("pre code").forEach((block) => {
-    hljs.highlightElement(block);
-  });
+// Para navegación con Turbo
+document.addEventListener("turbo:load", function () {
+  applyHighlight();
+});
+
+// Para cuando Turbo renderiza
+document.addEventListener("turbo:render", function () {
+  applyHighlight();
 });
