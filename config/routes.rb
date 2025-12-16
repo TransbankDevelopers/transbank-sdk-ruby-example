@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   get "product_index/index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -17,7 +18,6 @@ Rails.application.routes.draw do
   root to: "product_index#index"
 
   get "/oneclick-mall", to: "home#oneclick_mall", as: :oneclick_mall
-  get "/transaccion-completa", to: "home#transaccion_completa", as: :transaccion_completa
   get "/patpass-comercio", to: "home#patpass_comercio", as: :patpass_comercio
 
   # --- API Reference ---
@@ -74,4 +74,14 @@ Rails.application.routes.draw do
   get "oneclick-mall-diferido/status", to: "oneclick_mall_deferred#status", as: :oneclick_mall_deferred_status
   get "oneclick-mall-diferido/refund", to: "oneclick_mall_deferred#refund", as: :oneclick_mall_deferred_refund
   get "oneclick-mall-diferido/capture", to: "oneclick_mall_deferred#capture", as: :oneclick_mall_deferred_capture
+
+    # --- TX COMPLETA ---
+  # Controladores: TransaccionCompletaController
+  get "transaccion-completa", to: "transaccion_completa#index", as: :transaccion_completa_index
+  get "transaccion-completa/commit", to: "transaccion_completa#commit", as: :transaccion_completa_commit
+  post "transaccion-completa/installments", to: "transaccion_completa#installments", as: :transaccion_completa_installments
+  post "transaccion-completa/create", to: "transaccion_completa#create", as: :transaccion_completa_create
+  get "transaccion-completa/status", to: "transaccion_completa#status", as: :transaccion_completa_status
+  get "transaccion-completa/refund", to: "transaccion_completa#refund", as: :transaccion_completa_refund
+
 end
