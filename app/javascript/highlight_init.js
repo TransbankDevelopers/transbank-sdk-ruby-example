@@ -9,17 +9,14 @@ function applyHighlight() {
   }
 }
 
-// Para carga inicial (sin Turbo)
 document.addEventListener("DOMContentLoaded", function () {
   applyHighlight();
 });
 
-// Para navegación con Turbo
 document.addEventListener("turbo:load", function () {
   applyHighlight();
 });
 
-// Para cuando Turbo renderiza
 document.addEventListener("turbo:render", function () {
   applyHighlight();
 });
