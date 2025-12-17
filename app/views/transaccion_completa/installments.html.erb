@@ -1,5 +1,6 @@
-<h1>TransaccionCompleta#installments</h1>
-<p>Find me in app/views/transaccion_completa/installments.html.erb</p>
+<%
+  @navigation = { 'request' => 'Petición', 'response' => 'Respuesta', 'form' => 'Formulario' }
+%>
 
 <%= render 'shared/breadcrumbs', breadcrumbs: [
   { label: 'Inicio', path: root_path },

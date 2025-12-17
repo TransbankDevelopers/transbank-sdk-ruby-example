@@ -1,4 +1,6 @@
-<%# 1. Breadcrumbs: Usando el partial compartido y las rutas de Rails %>
+<%
+  @navigation = { 'request' => 'Petición', 'response' => 'Respuesta' }
+%>
 <%= render 'shared/breadcrumbs', breadcrumbs: [
   { label: 'Inicio', path: root_path },
   { label: 'Webpay Transacción Completa', path: transaccion_completa_index_path },

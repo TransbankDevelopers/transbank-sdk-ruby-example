@@ -1,4 +1,7 @@
 
+<%
+  @navigation = { 'request' => 'Petición', 'response' => 'Respuesta', 'form' => 'Formulario' }
+%>
 <%= render 'shared/breadcrumbs', breadcrumbs: [
   { label: 'Inicio', path: root_path },
   { label: 'Webpay Transacción Completa', path: transaccion_completa_index_path },
@@ -10,7 +13,7 @@
     Transbank que hemos recibido la transacción de manera exitosa. Es fundamental destacar que si no se confirma la
     transacción, esta será caducada.</p>
 
-<h2 id="request">Paso 1: Datos recibidos</h2>
+<h2 id="request">Paso 1: Petición</h2>
 <p class="mb-32">Para confirmar la transacción, debes enviar el token correspondiente. En el caso de pagos a
     plazos, también debes incluir el ID de la consulta de cuotas. En algunos casos, será necesario proporcionar el
     índice del periodo diferido y un valor boolean indicando si se tomará el periodo de gracia.
