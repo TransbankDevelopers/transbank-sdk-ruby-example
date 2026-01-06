@@ -3,11 +3,13 @@ require 'logger'
 class TransaccionCompletaController < ApplicationController
 
   PRODUCT = "Transacción completa".freeze
+  ERROR_PAGE = "shared/error_page".freeze
   logger = Logger.new(STDOUT)
 
   before_action :set_transbank_transaction
 
   def index
+    render :index
   end
 
   def create
@@ -41,7 +43,7 @@ class TransaccionCompletaController < ApplicationController
 
     rescue StandardError => e
       logger.error(e)
-      render "shared/error_page", locals: { error: e.message }
+      render ERROR_PAGE, locals: { error: e.message }
     end
   end
 
@@ -58,7 +60,7 @@ class TransaccionCompletaController < ApplicationController
 
     rescue StandardError => e
       logger.error("Error en Transacción Completa - Installments: #{e.message}")
-      render "shared/error_page", locals: { error: e.message }
+      render ERROR_PAGE, locals: { error: e.message }
     end
   end
 
@@ -86,7 +88,7 @@ class TransaccionCompletaController < ApplicationController
 
     rescue StandardError => e
       logger.error("Error en Transacción Completa - Commit: #{e.message}")
-      render "shared/error_page", locals: { error: e.message }
+      render ERROR_PAGE, locals: { error: e.message }
     end
   end
 
@@ -102,7 +104,7 @@ class TransaccionCompletaController < ApplicationController
 
     rescue StandardError => e
       logger.error("Error en Transacción Completa - Status: #{e.message}")
-      render "shared/error_page", locals: { error: e.message }
+      render ERROR_PAGE, locals: { error: e.message }
     end
   end
 
@@ -118,7 +120,7 @@ class TransaccionCompletaController < ApplicationController
 
     rescue StandardError => e
       logger.error("Error en Transacción Completa - Refund: #{e.message}")
-      render "shared/error_page", locals: { error: e.message }
+      render ERROR_PAGE, locals: { error: e.message }
     end
   end
 
