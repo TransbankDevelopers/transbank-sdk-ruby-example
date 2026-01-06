@@ -77,7 +77,7 @@ class TransaccionCompletaController < ApplicationController
       )
 
       @amount = session[:transaccion_completa_amount]
-      session.delete(:transaccion_completa_amount) # Opcional: limpiar la sesión
+      session.delete(:transaccion_completa_amount) 
       
       @request_data = req
       @response_data = resp
