@@ -67,7 +67,7 @@ class TransaccionCompletaController < ApplicationController
     deferred_period_index = nil
     grace_period = false
     begin
-      id_query_installments = req[:idQueryInstallments].presence # Usamos .presence para asegurar que sea nil si está vacío
+      id_query_installments = req[:idQueryInstallments].presence 
 
       resp = @tx.commit(
         req[:token],
