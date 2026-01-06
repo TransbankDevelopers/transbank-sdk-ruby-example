@@ -26,7 +26,6 @@ class TransaccionCompletaController < ApplicationController
         session_id: "S-#{rand(1..10000)}",
         amount: rand(1000..2000)
       }
-      puts "CVC recibido: #{req[:cvc].inspect}"
       resp = @tx.create(
         create_tx[:buy_order],
         create_tx[:session_id],
@@ -55,7 +54,6 @@ class TransaccionCompletaController < ApplicationController
 
       @request_data = req
       @response_data = resp
-      puts "-------------resp recibido----------------: #{@response_data.inspect}"
       render 'installments'
 
     rescue StandardError => e
