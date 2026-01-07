@@ -1,0 +1,48 @@
+<%
+  @navigation = { 'request' => 'Petición', 'response' => 'Respuesta' }
+%>
+<%= render 'shared/breadcrumbs', breadcrumbs: [
+  { label: 'Inicio', path: root_path },
+  { label: 'Webpay Transacción Completa', path: transaccion_completa_index_path },
+  { label: 'Reversa', path: transaccion_completa_refund_path }
+] %>
+
+<h1>Transacción Completa - Reembolsar</h1>
+<p class="mb-32">En esta etapa, tendrás la posibilidad de solicitar el reembolso del dinero al tarjeta habiente. El
+    tipo de reembolso (Reversa, Anulación o Anulación parcial) dependerá del monto y el tiempo transcurrido desde la
+    transacción.</p>
+
+<h2 id="request">Paso 1: Petición</h2>
+<p class="mb-32">Para efectuar la solicitud de reembolso, necesitarás el token de la transacción y el monto que
+    deseas reversar. Si decides anular el monto total, puede resultar en una Reversa o Anulación, según ciertas
+    condiciones. En caso de un monto menor al total, se realizará una Anulación parcial. Las anulaciones parciales
+    para tarjetas débito y prepago no están soportadas.
+</p>
+<p class="mb-32">En este
+    <%= link_to "link", "https://www.transbankdevelopers.cl/producto/webpay#anulaciones-y-reversas", class: "tbk-link", target: "_blank" %>
+    podrás ver mayor información sobre las condiciones y casos para anular o reversar
+    transacciones.
+</p>
+
+<pre class="mb-16">
+  <code class="language-ruby">
+require 'transbank/sdk'
+
+# Configuración de la transacción
+@tx = Transbank::Webpay::TransaccionCompleta::Transaction.new(
+  ::Transbank::Common::IntegrationCommerceCodes::TRANSACCION_COMPLETA,
+  ::Transbank::Common::IntegrationApiKeys::WEBPAY
+)
+@response_data = @tx.refund(token, amount)
+  </code>
+</pre>
+
+<h2 id="response">Paso 2: Respuesta</h2>
+<p>Transbank responderá con el resultado de la reversa o anulación. Evalúa cuidadosamente esta respuesta para
+    confirmar que el reembolso se haya procesado de manera efectiva.</p>
+
+<pre class="mb-16">
+  <code class="language-json"><%= h(JSON.pretty_generate(@response_data)) %></code>
+</pre>
+
+<%= link_to "CONSULTAR ESTADO", transaccion_completa_status_path(token: @request_data[:token]), class: "tbk-button primary mb-32" %>
