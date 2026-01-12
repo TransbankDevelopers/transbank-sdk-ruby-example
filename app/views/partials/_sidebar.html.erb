@@ -97,25 +97,6 @@
             </ul>
             <hr class="sidebar-divider" />
         </div>
-
-        <div>
-            <p class="tbk-sidebar-item-title">Webpay Transacción Completa</p>
-            <ul>
-                <li style="margin-bottom:20px;">
-                    <button class="sidebar-collapsible-title" data-collapsible="tx-complete"
-                            data-action="sidebar#toggleCollapsible" data-sidebar-target="collapsibleTitle">
-                        <span class="general-text">Transacción Completa</span>
-                        <%= image_tag 't-arrow.svg', class: 'arrow', alt: 't-arrow', width: 24, height: 24, data: { sidebar_target: "arrow" } %>
-                    </button>
-                    <ul class="collapsible-content" id="collapse-tx-complete" data-sidebar-target="collapsibleContent">
-                        <li class="collapsible-items">
-                            <%= link_to "Flujo Completo", transaccion_completa_index_path, class: "tbk-sidebar-item", data: { sidebar_target: "sidebarItem", turbo: false } %>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <hr class="sidebar-divider" />
-        </div>
     </nav>
 </aside>
 
