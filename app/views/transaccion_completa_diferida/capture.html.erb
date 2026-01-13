@@ -1,0 +1,61 @@
+
+<%
+  @navigation = { 'request' => 'Petición', 'response' => 'Respuesta', 'form' => 'Formulario' }
+%>
+<%= render 'shared/breadcrumbs', breadcrumbs: [
+  { label: 'Inicio', path: root_path },
+  { label: 'Webpay Transacción Completa Diferida', path: transaccion_completa_diferida_index_path },
+  { label: 'capturar', path: transaccion_completa_diferida_capture_path }
+] %>
+
+<h1>Transacción Completa Diferida - Capturar transacción</h1>
+<p class="mb-32">En este paso debemos capturar la transacción para realmente capturar el dinero que habia sido previamente reservado al hacer la transacción.</p>
+
+<h2 id="request">Paso 1: Petición</h2>
+<p class="mb-32">Para capturar una transacción, necesitaremos el Token, la Orden de compra, el Código de autorización y el monto a capturar.
+</p>
+
+<pre class="mb-16">
+  <code class="language-ruby">
+# Configuración de la transacción
+@tx = Transbank::Webpay::TransaccionCompleta::Transaction.new(
+  ::Transbank::Common::IntegrationCommerceCodes::TRANSACCION_COMPLETA_DEFERRED,
+  ::Transbank::Common::IntegrationApiKeys::WEBPAY
+)
+resp = @tx.capture(token, buy_order, authorization_code, amount);
+  </code>
+</pre>
+
+<h2 id="response">Paso 2: Respuesta</h2>
+<p>Una vez capturada la transacción, recibirás los siguientes datos de respuesta:.</p>
+
+<pre class="mb-16">
+  <code class="language-json"><%= JSON.pretty_generate(@response_data.to_h) %></code>
+</pre>
+
+<h2 id="form">¡Listo!</h2>
+<p class="mb-16">Con la transacción capturada, puedes mostrar al usuario una página de éxito de la transacción, proporcionándole la confirmación de que el proceso se ha completado con éxito.</p>
+
+<p>Después de capturar la transacción, podrás realizar otras operaciones útiles:</p>
+<ul class="bullet-list">
+    <li><span class="fw-700">Reembolsar:</span> Puedes reversar o anular el pago según ciertas condiciones
+        comerciales.</li>
+    <li><span class="fw-700">Consultar Estado:</span> Hasta 7 días después de realizada la transacción, podrás
+        consultar el estado de la transacción.</li>
+</ul>
+
+<%= form_with url: transaccion_completa_diferida_refund_path, method: :get, data: { turbo: false } do |form| %>
+    <div class="tbk-card">
+        <div class="input-container mb-32">
+            <%= form.label :amount, "Monto a reembolsar", class: "tbk-label" %>
+            <%= form.text_field :amount, class: "tbk-input-text", value: @amount %>
+            <%= form.hidden_field :token, value: @request_data&.fetch(:token) %>
+        </div>
+
+        <div class="tbk-card-footer">
+            <%= form.submit "REEMBOLSAR", class: "tbk-button primary" %>
+        </div>
+    </div>
+<% end %>
+
+<%= link_to "CONSULTAR ESTADO", transaccion_completa_diferida_status_path(token: @request_data&.fetch(:token)), class: "tbk-button primary mb-32" %>
