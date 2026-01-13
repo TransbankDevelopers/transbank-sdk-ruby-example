@@ -75,7 +75,7 @@ Rails.application.routes.draw do
   get "oneclick-mall-diferido/refund", to: "oneclick_mall_deferred#refund", as: :oneclick_mall_deferred_refund
   get "oneclick-mall-diferido/capture", to: "oneclick_mall_deferred#capture", as: :oneclick_mall_deferred_capture
 
-    # --- TX COMPLETA ---
+    # --- TX Completa ---
   # Controladores: TransaccionCompletaController
   get "transaccion-completa", to: "transaccion_completa#index", as: :transaccion_completa_index
   get "transaccion-completa/commit", to: "transaccion_completa#commit", as: :transaccion_completa_commit
@@ -83,5 +83,15 @@ Rails.application.routes.draw do
   post "transaccion-completa/create", to: "transaccion_completa#create", as: :transaccion_completa_create
   get "transaccion-completa/status", to: "transaccion_completa#status", as: :transaccion_completa_status
   get "transaccion-completa/refund", to: "transaccion_completa#refund", as: :transaccion_completa_refund
+  
+  # --- TX Completa Diferida ---
+  # Controladores: TransaccionCompletaDiferidaController
+  get "transaccion-completa-diferida", to: "transaccion_completa_diferida#index", as: :transaccion_completa_diferida_index
+  get "transaccion-completa-diferida/commit", to: "transaccion_completa_diferida#commit", as: :transaccion_completa_diferida_commit
+  post "transaccion-completa-diferida/installments", to: "transaccion_completa_diferida#installments", as: :transaccion_completa_diferida_installments
+  post "transaccion-completa-diferida/create", to: "transaccion_completa_diferida#create", as: :transaccion_completa_diferida_create
+  get "transaccion-completa-diferida/status", to: "transaccion_completa_diferida#status", as: :transaccion_completa_diferida_status
+  get "transaccion-completa-diferida/refund", to: "transaccion_completa_diferida#refund", as: :transaccion_completa_diferida_refund
+  get "transaccion-completa-diferida/capture", to: "transaccion_completa_diferida#capture", as: :transaccion_completa_diferida_capture
 
 end
