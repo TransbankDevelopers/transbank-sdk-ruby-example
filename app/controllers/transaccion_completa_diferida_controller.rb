@@ -63,21 +63,18 @@ class TransaccionCompletaDiferidaController < ApplicationController
   end
 
   def commit
-    puts "---- Params en commit--- : #{params.inspect}"
     req = params.permit(:token, :idQueryInstallments)
     deferred_period_index = nil
     grace_period = false
 
     begin
       id_query_installments = req[:idQueryInstallments].presence 
-puts "ID de consulta de cuotas: #{id_query_installments}"
       resp = @tx.commit(
         req[:token],
         id_query_installments,
         deferred_period_index,
         grace_period
       )
-puts "Respuesta de commit: #{resp.inspect}"
       @amount = session[:transaccion_completa_amount]
       session.delete(:transaccion_completa_amount) 
       
