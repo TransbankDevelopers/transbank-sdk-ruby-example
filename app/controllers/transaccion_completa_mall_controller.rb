@@ -112,7 +112,6 @@ class TransaccionCompletaMallController < ApplicationController
       puts "----------Detalles para commit_details: #{commit_details.inspect}"
       resp = @tx.commit(req[:token], commit_details)
 
-      # @response_data = normalize_transbank_response(resp)
       @response_data = resp.respond_to?(:with_indifferent_access) ? resp.with_indifferent_access : resp
       @request_data = req
       render 'commit'
@@ -127,8 +126,6 @@ class TransaccionCompletaMallController < ApplicationController
 
     begin
       resp = @tx.status(req[:token])
-
-      # @response_data = normalize_transbank_response(resp)
       @response_data = resp.respond_to?(:with_indifferent_access) ? resp.with_indifferent_access : resp
       @request_data = req
       render 'status'
