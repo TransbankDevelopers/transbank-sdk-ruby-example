@@ -1,11 +1,8 @@
-require 'logger'
-
 class TransaccionCompletaMallController < ApplicationController
 
 
   PRODUCT = "Transacción completa mall".freeze
   ERROR_PAGE = "shared/error_page".freeze
-  logger = Logger.new(STDOUT)
 
   before_action :set_transbank_transaction
 
@@ -43,7 +40,7 @@ class TransaccionCompletaMallController < ApplicationController
       @response_data = resp
       render 'create'
     rescue StandardError => e
-      logger.error(e)
+      Rails.logger.error(e)
       render ERROR_PAGE, locals: { error: e.message }
     end
   end
@@ -56,11 +53,7 @@ class TransaccionCompletaMallController < ApplicationController
         detail.respond_to?(:with_indifferent_access) ? detail.with_indifferent_access : detail
       end
 
-
       installments_number = req[:installments_number].to_i
-      if installments_number <= 0
-        return render ERROR_PAGE, locals: { error: "installments_number must be greater than 0" }
-      end
       
       installment_details = details.map do |detail|
         {
@@ -77,7 +70,7 @@ class TransaccionCompletaMallController < ApplicationController
       @response_data = resp
       render 'installments'
     rescue StandardError => e
-      logger.error("Error en Transacción Completa Mall - Installments: #{e.message}")
+      Rails.logger.error("Error en Transacción Completa Mall - Installments: #{e.message}")
       render ERROR_PAGE, locals: { error: e.message }
     end
   end
@@ -113,7 +106,7 @@ class TransaccionCompletaMallController < ApplicationController
       @request_data = req
       render 'commit'
     rescue StandardError => e
-      logger.error("Error en Transacción Completa Mall - Commit: #{e.message}")
+      Rails.logger.error("Error en Transacción Completa Mall - Commit: #{e.message}")
       render ERROR_PAGE, locals: { error: e.message }
     end
   end
@@ -127,7 +120,7 @@ class TransaccionCompletaMallController < ApplicationController
       @request_data = req
       render 'status'
     rescue StandardError => e
-      logger.error("Error en Transacción Completa Mall - Status: #{e.message}")
+      Rails.logger.error("Error en Transacción Completa Mall - Status: #{e.message}")
       render ERROR_PAGE, locals: { error: e.message }
     end
   end
@@ -142,7 +135,7 @@ class TransaccionCompletaMallController < ApplicationController
       @response_data = resp
       render 'refund'
     rescue StandardError => e
-      logger.error("Error en Transacción Completa Mall - Refund: #{e.message}")
+      Rails.logger.error("Error en Transacción Completa Mall - Refund: #{e.message}")
       render ERROR_PAGE, locals: { error: e.message }
     end
   end
