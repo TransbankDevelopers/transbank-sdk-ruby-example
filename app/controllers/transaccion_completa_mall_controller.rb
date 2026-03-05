@@ -1,5 +1,5 @@
 class TransaccionCompletaMallController < ApplicationController
-
+  include TransaccionCompletaHelper
 
   PRODUCT = "Transacción completa mall".freeze
   ERROR_PAGE = "shared/error_page".freeze
@@ -49,9 +49,7 @@ class TransaccionCompletaMallController < ApplicationController
     req = params.permit(:token, :installments_number)
 
     begin
-      details = (session[:transaccion_completa_mall_details] || []).map do |detail|
-        detail.respond_to?(:with_indifferent_access) ? detail.with_indifferent_access : detail
-      end
+      details = normalize_mall_details_from_session(:transaccion_completa_mall_details)
 
       installments_number = req[:installments_number].to_i
       
@@ -79,13 +77,12 @@ class TransaccionCompletaMallController < ApplicationController
     req = params.permit(:token, :idQueryInstallments, :deferredPeriodIndex, :gracePeriod)
 
     begin
-      details = session[:transaccion_completa_mall_details] || []
-
+      details = normalize_mall_details_from_session(:transaccion_completa_mall_details)
 
       commit_details = details.map do |detail|
         payload = {
-          "commerce_code" => detail["commerce_code"],
-          "buy_order" => detail["buy_order"]
+          "commerce_code" => detail[:commerce_code],
+          "buy_order" => detail[:buy_order]
         }
 
         if req[:idQueryInstallments].present?
