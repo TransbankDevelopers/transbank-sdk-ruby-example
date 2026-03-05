@@ -75,7 +75,7 @@ Rails.application.routes.draw do
   get "oneclick-mall-diferido/refund", to: "oneclick_mall_deferred#refund", as: :oneclick_mall_deferred_refund
   get "oneclick-mall-diferido/capture", to: "oneclick_mall_deferred#capture", as: :oneclick_mall_deferred_capture
 
-    # --- TX Completa ---
+  # --- TX Completa ---
   # Controladores: TransaccionCompletaController
   get "transaccion-completa", to: "transaccion_completa#index", as: :transaccion_completa_index
   get "transaccion-completa/commit", to: "transaccion_completa#commit", as: :transaccion_completa_commit
@@ -83,6 +83,16 @@ Rails.application.routes.draw do
   post "transaccion-completa/create", to: "transaccion_completa#create", as: :transaccion_completa_create
   get "transaccion-completa/status", to: "transaccion_completa#status", as: :transaccion_completa_status
   get "transaccion-completa/refund", to: "transaccion_completa#refund", as: :transaccion_completa_refund
+  
+  # --- TX Completa Mall ---
+  # Controladores: TransaccionCompletaMallController
+  get "transaccion-completa-mall", to: "transaccion_completa_mall#index", as: :transaccion_completa_mall_index
+  get "transaccion-completa-mall/commit", to: "transaccion_completa_mall#commit", as: :transaccion_completa_mall_commit
+  post "transaccion-completa-mall/installments", to: "transaccion_completa_mall#installments", as: :transaccion_completa_mall_installments
+  post "transaccion-completa-mall/create", to: "transaccion_completa_mall#create", as: :transaccion_completa_mall_create
+  get "transaccion-completa-mall/status", to: "transaccion_completa_mall#status", as: :transaccion_completa_mall_status
+  get "transaccion-completa-mall/refund", to: "transaccion_completa_mall#refund", as: :transaccion_completa_mall_refund
+  
   
   # --- TX Completa Diferida ---
   # Controladores: TransaccionCompletaDiferidaController
