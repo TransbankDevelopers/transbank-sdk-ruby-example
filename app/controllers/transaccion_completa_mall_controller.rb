@@ -1,7 +1,7 @@
 require 'logger'
 
 class TransaccionCompletaMallController < ApplicationController
-  include TransbankResponseHelper
+
 
   PRODUCT = "Transacción completa mall".freeze
   ERROR_PAGE = "shared/error_page".freeze
