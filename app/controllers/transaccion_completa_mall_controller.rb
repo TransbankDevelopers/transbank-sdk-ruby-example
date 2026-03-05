@@ -70,7 +70,6 @@ class TransaccionCompletaMallController < ApplicationController
         }
       end
 
-      puts "----------Detalles para installment_details: #{installment_details.inspect}"
 
       resp = @tx.installments(req[:token], installment_details)
 
@@ -88,7 +87,6 @@ class TransaccionCompletaMallController < ApplicationController
 
     begin
       details = session[:transaccion_completa_mall_details] || []
-      puts "----------Detalles para details: #{details.inspect}"
 
 
       commit_details = details.map do |detail|
@@ -109,7 +107,6 @@ class TransaccionCompletaMallController < ApplicationController
 
         payload
       end
-      puts "----------Detalles para commit_details: #{commit_details.inspect}"
       resp = @tx.commit(req[:token], commit_details)
 
       @response_data = resp.respond_to?(:with_indifferent_access) ? resp.with_indifferent_access : resp
