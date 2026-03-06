@@ -1,7 +1,6 @@
 class TransaccionCompletaMallDiferidaController < ApplicationController
   include TransaccionCompletaHelper
 
-  PRODUCT = "Transacción completa mall diferida".freeze
   ERROR_PAGE = "shared/error_page".freeze
 
   before_action :set_transbank_transaction
