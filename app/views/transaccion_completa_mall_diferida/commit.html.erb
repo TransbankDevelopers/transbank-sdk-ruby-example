@@ -71,13 +71,13 @@ resp = @tx.commit(token, details)
           <span class="tbk-card-title">Capturar</span>
           <div class="input-container mb-32">
               <%= form.label :child_buy_order, "Orden de compra hijo", class: "tbk-label" %>
-              <%= form.text_field :child_buy_order, class: "tbk-input-text", value: detail[:buy_order] %>
+              <%= form.text_field :child_buy_order, class: "tbk-input-text mb-16", value: detail[:buy_order] %>
               <%= form.label :child_commerce_code, "Commerce Code hijo", class: "tbk-label" %>
-              <%= form.text_field :child_commerce_code, class: "tbk-input-text", value: detail[:commerce_code] %>
+              <%= form.text_field :child_commerce_code, class: "tbk-input-text mb-16", value: detail[:commerce_code] %>
               <%= form.label :authorization_code, "Código de autorización", class: "tbk-label" %>
-              <%= form.text_field :authorization_code, class: "tbk-input-text", value: detail[:authorization_code] %>
+              <%= form.text_field :authorization_code, class: "tbk-input-text mb-16", value: detail[:authorization_code] %>
               <%= form.label :amount, "Monto a capturar", class: "tbk-label" %>
-              <%= form.text_field :amount, class: "tbk-input-text", value: detail[:amount] %>
+              <%= form.text_field :amount, class: "tbk-input-text mb-16", value: detail[:amount] %>
               <%= form.hidden_field :token, value: @request_data[:token] %>
               <%= form.hidden_field :parent_buy_order, value: (@response_data['buy_order'] || @response_data[:buy_order]) if @response_data.respond_to?(:[]) %>
           </div>
