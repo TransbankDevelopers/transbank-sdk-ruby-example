@@ -48,17 +48,9 @@ class TransaccionCompletaMallDiferidaController < ApplicationController
     req = params.permit(:token, :installments_number)
 
     begin
-      Rails.logger.info("TCM diferido installments params: #{params.to_unsafe_h}")
       details = normalize_mall_details_from_session(:transaccion_completa_mall_diferida_details)
 
-      if req[:installments_number].blank?
-        return render ERROR_PAGE, locals: { error: "installments_number is required" }
-      end
-
       installments_number = req[:installments_number].to_i
-      if installments_number <= 0
-        return render ERROR_PAGE, locals: { error: "installments_number must be greater than 0" }
-      end
 
       installment_details = details.map do |detail|
         {
@@ -108,6 +100,8 @@ class TransaccionCompletaMallDiferidaController < ApplicationController
 
       @response_data = resp.respond_to?(:with_indifferent_access) ? resp.with_indifferent_access : resp
       @request_data = req
+      @details = (@response_data.is_a?(Hash) ? @response_data['details'] || @response_data[:details] : []) || []
+      
       render 'commit'
     rescue StandardError => e
       Rails.logger.error("Error en Transacción Completa Mall Diferida - Commit: #{e.message}")

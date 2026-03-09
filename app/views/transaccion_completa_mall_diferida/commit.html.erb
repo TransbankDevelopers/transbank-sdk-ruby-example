@@ -1,6 +1,5 @@
 <%
   @navigation = { 'request' => 'Petición', 'response' => 'Respuesta', 'form' => 'Formulario' }
-  details = (@response_data.is_a?(Hash) ? @response_data['details'] || @response_data[:details] : []) || []
 %>
 <%= render 'shared/breadcrumbs', breadcrumbs: [
   { label: 'Inicio', path: root_path },
@@ -62,7 +61,7 @@ resp = @tx.commit(token, details)
 <h2 id="form">¡Listo!</h2>
 <p class="mb-16">Ahora que se ha confirmado la transacción, puedes capturar el monto previamente autorizado.</p>
 
-<% details.each do |detail| %>
+<% @details.each do |detail| %>
   <%
     detail = detail.with_indifferent_access if detail.respond_to?(:with_indifferent_access)
   %>
