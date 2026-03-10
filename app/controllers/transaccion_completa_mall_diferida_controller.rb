@@ -1,4 +1,4 @@
-class TransaccionCompletaMallController < ApplicationController
+class TransaccionCompletaMallDiferidaController < ApplicationController
   include TransaccionCompletaHelper
 
   ERROR_PAGE = "shared/error_page".freeze
@@ -33,7 +33,7 @@ class TransaccionCompletaMallController < ApplicationController
         req[:cvc]
       )
 
-      session[:transaccion_completa_mall_details] = details
+      session[:transaccion_completa_mall_diferida_details] = details
 
       @request_data = create_tx
       @response_data = resp
@@ -48,10 +48,10 @@ class TransaccionCompletaMallController < ApplicationController
     req = params.permit(:token, :installments_number)
 
     begin
-      details = normalize_mall_details_from_session(:transaccion_completa_mall_details)
+      details = normalize_mall_details_from_session(:transaccion_completa_mall_diferida_details)
 
       installments_number = req[:installments_number].to_i
-      
+
       installment_details = details.map do |detail|
         {
           "commerce_code" => detail[:commerce_code],
@@ -60,14 +60,13 @@ class TransaccionCompletaMallController < ApplicationController
         }
       end
 
-
       resp = @tx.installments(req[:token], installment_details)
 
       @request_data = req
       @response_data = resp
       render 'installments'
     rescue StandardError => e
-      Rails.logger.error("Error en Transacción Completa Mall - Installments: #{e.message}")
+      Rails.logger.error("Error en Transacción Completa Mall Diferida - Installments: #{e.message}")
       render ERROR_PAGE, locals: { error: e.message }
     end
   end
@@ -76,7 +75,7 @@ class TransaccionCompletaMallController < ApplicationController
     req = params.permit(:token, :idQueryInstallments, :deferredPeriodIndex, :gracePeriod)
 
     begin
-      details = normalize_mall_details_from_session(:transaccion_completa_mall_details)
+      details = normalize_mall_details_from_session(:transaccion_completa_mall_diferida_details)
 
       commit_details = details.map do |detail|
         payload = {
@@ -96,13 +95,37 @@ class TransaccionCompletaMallController < ApplicationController
 
         payload
       end
+
       resp = @tx.commit(req[:token], commit_details)
 
       @response_data = resp.respond_to?(:with_indifferent_access) ? resp.with_indifferent_access : resp
       @request_data = req
+      @details = (@response_data.is_a?(Hash) ? @response_data['details'] || @response_data[:details] : []) || []
+      
       render 'commit'
     rescue StandardError => e
-      Rails.logger.error("Error en Transacción Completa Mall - Commit: #{e.message}")
+      Rails.logger.error("Error en Transacción Completa Mall Diferida - Commit: #{e.message}")
+      render ERROR_PAGE, locals: { error: e.message }
+    end
+  end
+
+  def capture
+    req = params.permit(:token, :child_buy_order, :child_commerce_code, :authorization_code, :amount)
+
+    begin
+      resp = @tx.capture(
+        req[:token],
+        req[:child_commerce_code],
+        req[:child_buy_order],
+        req[:authorization_code],
+        req[:amount].to_i
+      )
+
+      @request_data = req
+      @response_data = resp
+      render 'capture'
+    rescue StandardError => e
+      Rails.logger.error("Error en Transacción Completa Mall Diferida - Capture: #{e.message}")
       render ERROR_PAGE, locals: { error: e.message }
     end
   end
@@ -112,11 +135,12 @@ class TransaccionCompletaMallController < ApplicationController
 
     begin
       resp = @tx.status(req[:token])
+
       @response_data = resp.respond_to?(:with_indifferent_access) ? resp.with_indifferent_access : resp
       @request_data = req
       render 'status'
     rescue StandardError => e
-      Rails.logger.error("Error en Transacción Completa Mall - Status: #{e.message}")
+      Rails.logger.error("Error en Transacción Completa Mall Diferida - Status: #{e.message}")
       render ERROR_PAGE, locals: { error: e.message }
     end
   end
@@ -131,7 +155,7 @@ class TransaccionCompletaMallController < ApplicationController
       @response_data = resp
       render 'refund'
     rescue StandardError => e
-      Rails.logger.error("Error en Transacción Completa Mall - Refund: #{e.message}")
+      Rails.logger.error("Error en Transacción Completa Mall Diferida - Refund: #{e.message}")
       render ERROR_PAGE, locals: { error: e.message }
     end
   end
@@ -140,7 +164,7 @@ class TransaccionCompletaMallController < ApplicationController
 
   def set_transbank_transaction
     environment = :integration
-    commerce_code = ::Transbank::Common::IntegrationCommerceCodes::TRANSACCION_COMPLETA_MALL
+    commerce_code = ::Transbank::Common::IntegrationCommerceCodes::TRANSACCION_COMPLETA_MALL_DEFERRED
     api_key = ::Transbank::Common::IntegrationApiKeys::WEBPAY
 
     options = Transbank::Webpay::Options.new(commerce_code, api_key, environment)
@@ -151,12 +175,12 @@ class TransaccionCompletaMallController < ApplicationController
     [
       {
         amount: rand(1001..2000),
-        commerce_code: ::Transbank::Common::IntegrationCommerceCodes::TRANSACCION_COMPLETA_MALL_CHILD1,
+        commerce_code: ::Transbank::Common::IntegrationCommerceCodes::TRANSACCION_COMPLETA_MALL_DEFERRED_CHILD1,
         buy_order: "O-#{rand(1..10000)}"
       },
       {
         amount: rand(1001..2000),
-        commerce_code: ::Transbank::Common::IntegrationCommerceCodes::TRANSACCION_COMPLETA_MALL_CHILD2,
+        commerce_code: ::Transbank::Common::IntegrationCommerceCodes::TRANSACCION_COMPLETA_MALL_DEFERRED_CHILD2,
         buy_order: "O-#{rand(1..10000)}"
       }
     ]

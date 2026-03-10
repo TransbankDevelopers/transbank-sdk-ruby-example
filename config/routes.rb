@@ -93,6 +93,15 @@ Rails.application.routes.draw do
   get "transaccion-completa-mall/status", to: "transaccion_completa_mall#status", as: :transaccion_completa_mall_status
   get "transaccion-completa-mall/refund", to: "transaccion_completa_mall#refund", as: :transaccion_completa_mall_refund
   
+  # --- TX Completa Mall Diferida ---
+  # Controladores: TransaccionCompletaMallDiferidaController
+  get "transaccion-completa-mall-diferido", to: "transaccion_completa_mall_diferida#index", as: :transaccion_completa_mall_diferida_index
+  get "transaccion-completa-mall-diferido/commit", to: "transaccion_completa_mall_diferida#commit", as: :transaccion_completa_mall_diferida_commit
+  post "transaccion-completa-mall-diferido/installments", to: "transaccion_completa_mall_diferida#installments", as: :transaccion_completa_mall_diferida_installments
+  post "transaccion-completa-mall-diferido/create", to: "transaccion_completa_mall_diferida#create", as: :transaccion_completa_mall_diferida_create
+  get "transaccion-completa-mall-diferido/status", to: "transaccion_completa_mall_diferida#status", as: :transaccion_completa_mall_diferida_status
+  get "transaccion-completa-mall-diferido/refund", to: "transaccion_completa_mall_diferida#refund", as: :transaccion_completa_mall_diferida_refund
+  get "transaccion-completa-mall-diferido/capture", to: "transaccion_completa_mall_diferida#capture", as: :transaccion_completa_mall_diferida_capture
   
   # --- TX Completa Diferida ---
   # Controladores: TransaccionCompletaDiferidaController

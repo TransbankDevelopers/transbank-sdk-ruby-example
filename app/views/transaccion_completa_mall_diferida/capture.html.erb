@@ -1,0 +1,55 @@
+<%
+  @navigation = { 'confirmar' => 'Confirmar', 'confirm' => 'Otras Utilidades' }
+%>
+
+<%= render 'shared/breadcrumbs', breadcrumbs: [
+  { label: 'Inicio', path: root_path },
+  { label: 'Webpay Transacción Completa Mall Diferido', path: transaccion_completa_mall_diferida_index_path },
+  { label: 'Capturar', path: transaccion_completa_mall_diferida_capture_path }
+] %>
+
+<h1>Transacción Completa Mall Diferido - Capturar transacción</h1>
+<p class="mb-32">En este paso debemos capturar la transacción para realmente capturar el dinero que habia sido
+    previamente reservado al hacer la transacción.</p>
+
+<h2 id="confirmar">Paso 1: Petición</h2>
+<p class="mb-32">Para capturar una transacción, necesitaremos el Token, la Orden de compra, el Código de autorización
+    y el monto a capturar.</p>
+
+<pre class="mb-16">
+  <code class="language-ruby">
+require 'transbank/sdk'
+
+# Configuración de la transacción
+@tx = Transbank::Webpay::TransaccionCompleta::MallTransaction.new(
+  ::Transbank::Common::IntegrationCommerceCodes::TRANSACCION_COMPLETA_MALL_DEFERRED,
+  ::Transbank::Common::IntegrationApiKeys::WEBPAY
+)
+resp = @tx.capture(token, child_commerce_code, child_buy_order, authorization_code, amount)
+  </code>
+</pre>
+
+<h2 id="confirm">Paso 2: Respuesta</h2>
+<pre class="mb-16">
+  <code class="language-json"><%= h(JSON.pretty_generate(@response_data)) %></code>
+</pre>
+
+<h2 class="mt-32">¡Listo!</h2>
+<p>Después de capturar la transacción, podrás realizar otras operaciones útiles:</p>
+
+<%= form_with url: transaccion_completa_mall_diferida_refund_path, method: :get, data: { turbo: false } do |form| %>
+    <div class="tbk-card">
+        <div class="input-container mb-32">
+            <%= form.label :amount, "Monto a reembolsar", class: "tbk-label" %>
+            <%= form.text_field :amount, class: "tbk-input-text", value: @request_data[:amount] %>
+            <%= form.hidden_field :token, value: @request_data[:token] %>
+            <%= form.hidden_field :buy_order, value: @request_data[:child_buy_order] %>
+            <%= form.hidden_field :commerce_code, value: @request_data[:child_commerce_code] %>
+        </div>
+        <div class="tbk-card-footer">
+            <%= form.submit "REEMBOLSAR", class: "tbk-button primary" %>
+        </div>
+    </div>
+<% end %>
+
+<%= link_to "CONSULTAR ESTADO", transaccion_completa_mall_diferida_status_path(token: @request_data[:token]), class: "tbk-button primary mb-32" %>
