@@ -1,0 +1,26 @@
+<%
+  @navigation = { 'form' => 'Formulario' }
+%>
+
+<%= render 'shared/breadcrumbs', breadcrumbs: [
+  { label: 'Inicio', path: root_path },
+  { label: 'Patpass Comercio', path: patpass_comercio_path },
+  { label: 'Voucher', path: patpass_comercio_voucher_path }
+] %>
+
+<h1>Patpass Comercio - Voucher</h1>
+<p class="mb-32">
+  La inscripción ya se encuentra finalizada. Una vez finalizada la inscripción puedes seguir consultando por el voucher.
+</p>
+
+<div id="form" class="tbk-card">
+  <span class="tbk-card-title">Voucher</span>
+  <label class="tbk-label" for="tokenComercio">Token</label>
+  <input type="text" name="tokenComercio" class="tbk-input-text" value="<%= @j_token %>" />
+  <div class="tbk-card-footer">
+    <form action="https://pagoautomaticocontarjetasint.transbank.cl/nuevo-ic-rest/tokenVoucherLogin" method="POST">
+      <input type="hidden" name="tokenComercio" value="<%= @j_token %>" />
+      <button class="tbk-button primary">VER VOUCHER</button>
+    </form>
+  </div>
+</div>
