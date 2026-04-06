@@ -18,7 +18,9 @@ Rails.application.routes.draw do
   root to: "product_index#index"
 
   get "/oneclick-mall", to: "home#oneclick_mall", as: :oneclick_mall
-  get "/patpass-comercio", to: "home#patpass_comercio", as: :patpass_comercio
+  get "/patpass-comercio", to: "patpass_comercio#start", as: :patpass_comercio
+  match "/patpass-comercio/commit", to: "patpass_comercio#commit", via: [ :get, :post ], as: :patpass_comercio_commit
+  match "/patpass-comercio/voucher", to: "patpass_comercio#voucher", via: [ :get, :post ], as: :patpass_comercio_voucher
 
   # --- API Reference ---
   get "/api-reference/webpay-plus", to: "webpay_plus#show_operations", as: :webpay_plus_api_operations
