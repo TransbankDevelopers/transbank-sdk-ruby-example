@@ -10,11 +10,7 @@ class PatpassComercioController < ApplicationController
 
   def start
     begin
-      base_url = ENV.fetch("PUBLIC_BASE_URL", "").to_s.strip
-      if base_url.empty?
-        render ERROR_PAGE, locals: { error: "Falta configurar PUBLIC_BASE_URL en el archivo .env" } and return
-      end
-
+      base_url = request.base_url
       start_tx = {
         service_id: "Service-#{SecureRandom.random_number(1..10000)}",
         max_amount: 100,
