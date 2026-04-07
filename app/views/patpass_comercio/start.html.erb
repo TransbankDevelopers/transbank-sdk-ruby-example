@@ -1,0 +1,95 @@
+<%
+  @navigation = { 'request' => 'Petición', 'response' => 'Respuesta', 'form' => 'Formulario', 'example' => 'Ejemplo' }
+%>
+
+<%= render 'shared/breadcrumbs', breadcrumbs: [
+  { label: 'Inicio', path: root_path },
+  { label: 'Patpass Comercio', path: patpass_comercio_path }
+] %>
+
+<h1>Patpass Comercio - Iniciar Transacción</h1>
+<p class="mb-16">
+  En este paso inicial, procederemos a inscribir una tarjeta con el objetivo de obtener un identificador único.
+  Esto nos permitirá redirigir al Tarjetahabiente hacia el formulario de inscripción en el siguiente paso.
+</p>
+<p class="mb-32">Todas las transacciones de este proyecto ejemplo son realizadas en ambiente de integración.</p>
+
+<h2 id="request">Paso 1: Petición</h2>
+<p class="mb-32">
+  Para comenzar, importa la librería PatpassComercio y luego inicia una inscripción. Tener en cuenta: Actualmente,
+  el ambiente de integración no admite direcciones locales (como localhost, 127.0.0.1, 192.168..) en los atributos
+  "url" y "finalUrl".
+</p>
+
+<pre class="mb-16">
+  <code class="language-ruby">
+require 'transbank/sdk'
+
+# Configuración de la transacción
+commerce_code = ::Transbank::Common::IntegrationCommerceCodes::PATPASS_COMERCIO
+api_key = ::Transbank::Common::IntegrationApiKeys::PATPASS_COMERCIO
+options = Transbank::Patpass::Options.new(commerce_code, api_key, :integration)
+inscription = Transbank::Patpass::PatpassComercio::Inscription.new(options)
+
+resp = inscription.start(
+  return_url,
+  name,
+  last_name,
+  second_last_name,
+  rut,
+  service_id,
+  final_url,
+  max_amount,
+  phone,
+  cell_phone,
+  patpass_name,
+  person_email,
+  commerce_email,
+  address,
+  city
+)
+  </code>
+</pre>
+
+<h2 id="response">Paso 2: Respuesta</h2>
+<p class="mb-32">Una vez iniciada la inscripción, recibirás los siguientes datos de respuesta:</p>
+
+<pre class="mb-16">
+  <code class="language-json"><%= h(JSON.pretty_generate(@response_data)) %></code>
+</pre>
+
+<h2 id="form">Paso 3: Creación del formulario</h2>
+<p class="mb-32">
+  Utiliza los datos obtenidos durante la inscripción para generar un formulario, proporcionando al Tarjetahabiente
+  una experiencia de inscripción fluida y segura.
+</p>
+
+<pre class="mb-16">
+  <code class="language-html">
+<%= h(<<~HTML)
+<form action="#{@response_data["url_webpay"] || @response_data["url"]}" method="POST">
+  <input type="hidden" name="tokenComercio" value="#{@response_data["token"]}" />
+  <input type="submit" value="Inscribir" />
+</form>
+HTML
+%>
+  </code>
+</pre>
+
+<h2 id="example">Ejemplo</h2>
+<p class="mb-32">Para poder iniciar la inscripción, se necesitan los siguientes datos:</p>
+
+<div class="mb-32">
+  <%= render partial: 'shared/request_table', locals: { data: @request_data } %>
+</div>
+
+<form action="<%= @response_data['url_webpay'] || @response_data['url'] %>" method="POST">
+  <div class="tbk-card">
+    <span class="tbk-card-title">Formulario de redirección</span>
+    <label class="tbk-label" for="tokenComercio">Token</label>
+    <input type="text" name="tokenComercio" class="tbk-input-text" value="<%= @response_data['token'] %>" />
+    <div class="tbk-card-footer">
+      <button class="tbk-button primary">INSCRIBIR</button>
+    </div>
+  </div>
+</form>
