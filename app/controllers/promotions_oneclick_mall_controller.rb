@@ -1,7 +1,4 @@
 class PromotionsOneclickMallController < ApplicationController
-  skip_before_action :verify_authenticity_token
-
-  logger = Logger.new(STDOUT)
   ERROR_PAGE = "shared/error_page".freeze
   before_action :set_transbank_transaction
 
@@ -21,7 +18,7 @@ class PromotionsOneclickMallController < ApplicationController
       @request_data = create_ins
       @respond_data = @resp.with_indifferent_access
     rescue StandardError => e
-      logger.error(e)
+      Rails.logger.error(e)
       flash[:alert] = "Ocurrió un error inesperado: #{e.message}"
       render ERROR_PAGE, locals: { error: e.message }
     end
@@ -44,7 +41,7 @@ class PromotionsOneclickMallController < ApplicationController
         tbk_user: @tbk_user
       }
     rescue StandardError => e
-      logger.error(e)
+      Rails.logger.error(e)
       flash[:alert] = "Ocurrió un error inesperado: #{e.message}"
       render ERROR_PAGE, locals: { error: e.message }
     end
@@ -58,7 +55,7 @@ class PromotionsOneclickMallController < ApplicationController
       @resp = @inscription.delete(@tbk_user, @username)
       @respond_data = {}
     rescue StandardError => e
-      logger.error(e)
+      Rails.logger.error(e)
       flash[:alert] = "Ocurrió un error inesperado: #{e.message}"
       render ERROR_PAGE, locals: { error: e.message }
     end
@@ -67,15 +64,15 @@ class PromotionsOneclickMallController < ApplicationController
   def authorize
     begin
       @req = params.as_json
-      @username = @req['username']
-      @tbk_user = @req['tbk_user']
+      @username = required_text_param(:username)
+      @tbk_user = required_text_param(:tbk_user)
       @buy_order = "buyOrder_#{rand(1000)}"
-      @child_commerce_code1 = @req['child_commerce_code1']
-      @child_commerce_code2 = @req['child_commerce_code2']
-      @child_commerce_amount1 = @req['child_commerce_amount1']
-      @child_commerce_amount2 = @req['child_commerce_amount2']
-      @child_commerce_installments1 = @req['child_commerce_installments1']
-      @child_commerce_installments2 = @req['child_commerce_installments2']
+      @child_commerce_code1 = required_text_param(:child_commerce_code1)
+      @child_commerce_code2 = required_text_param(:child_commerce_code2)
+      @child_commerce_amount1 = required_decimal_param(:child_commerce_amount1)
+      @child_commerce_amount2 = required_decimal_param(:child_commerce_amount2)
+      @child_commerce_installments1 = required_integer_param(:child_commerce_installments1)
+      @child_commerce_installments2 = required_integer_param(:child_commerce_installments2)
       @details =[
         {
           commerce_code: @child_commerce_code1,
@@ -93,7 +90,7 @@ class PromotionsOneclickMallController < ApplicationController
       @resp = @tx.authorize(@username, @tbk_user, @buy_order, @details)
       @respond_data = @resp.with_indifferent_access
     rescue StandardError => e
-      logger.error(e)
+      Rails.logger.error(e)
       flash[:alert] = "Ocurrió un error inesperado: #{e.message}"
       render ERROR_PAGE, locals: { error: e.message }
     end
@@ -102,11 +99,11 @@ class PromotionsOneclickMallController < ApplicationController
   def status
     begin
       @req = params.as_json
-      @buy_order = params[:buy_order]
+      @buy_order = required_text_param(:buy_order)
       @resp = @tx.status(@buy_order)
       @respond_data = @resp.with_indifferent_access
     rescue StandardError => e
-      logger.error(e)
+      Rails.logger.error(e)
       flash[:alert] = "Ocurrió un error inesperado: #{e.message}"
       render ERROR_PAGE, locals: { error: e.message }
     end
@@ -115,14 +112,14 @@ class PromotionsOneclickMallController < ApplicationController
   def refund
     begin
       @req = params.as_json
-      @buy_order = params[:buy_order] 
-      @child_commerce_code = params[:child_commerce_code] 
-      @child_buy_order = params[:child_buy_order] 
-      @amount = params[:amount] 
+      @buy_order = required_text_param(:buy_order)
+      @child_commerce_code = required_text_param(:child_commerce_code)
+      @child_buy_order = required_text_param(:child_buy_order)
+      @amount = required_decimal_param(:amount)
       @resp = @tx.refund(@buy_order, @child_commerce_code, @child_buy_order, @amount)
       @respond_data = @resp.with_indifferent_access
     rescue StandardError => e
-      logger.error(e)
+      Rails.logger.error(e)
       flash[:alert] = "Ocurrió un error inesperado: #{e.message}"
       render ERROR_PAGE, locals: { error: e.message }
     end
@@ -130,11 +127,11 @@ class PromotionsOneclickMallController < ApplicationController
 
   def info_bin
     begin
-      @tbk_user = params[:tbk_user]
+      @tbk_user = required_text_param(:tbk_user)
       @resp = @bin_info.query_bin(@tbk_user)
       @respond_data = @resp.with_indifferent_access
     rescue StandardError => e
-      logger.error(e)
+      Rails.logger.error(e)
       flash[:alert] = "Ocurrió un error inesperado: #{e.message}"
       render ERROR_PAGE, locals: { error: e.message }
     end
@@ -149,6 +146,25 @@ class PromotionsOneclickMallController < ApplicationController
     @tx = Transbank::Webpay::Oneclick::MallTransaction.new(options)
     @inscription = Transbank::Webpay::Oneclick::MallInscription.new(options)
     @bin_info = Transbank::Webpay::Oneclick::MallBinInfo.new(options)
+  end
+
+  def required_text_param(key)
+    value = params[key]
+    return value if value.present?
+
+    raise ArgumentError, "El parámetro #{key} es obligatorio."
+  end
+
+  def required_decimal_param(key)
+    BigDecimal(required_text_param(key).to_s)
+  rescue ArgumentError
+    raise ArgumentError, "El parámetro #{key} debe ser numérico."
+  end
+
+  def required_integer_param(key)
+    Integer(required_text_param(key).to_s, 10)
+  rescue ArgumentError
+    raise ArgumentError, "El parámetro #{key} debe ser un entero."
   end
 
 end

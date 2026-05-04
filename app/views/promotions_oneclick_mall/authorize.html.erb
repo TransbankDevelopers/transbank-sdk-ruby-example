@@ -74,19 +74,19 @@
       <div class="card-multi-field">
         <div class="input-container">
           <%= label_tag :buy_order, "Orden compra:", class: "tbk-label" %>
-          <%= text_field_tag :buy_order, @respond_data[:buy_order], class: "tbk-input-text" %>
+          <%= text_field_tag :buy_order, @respond_data[:buy_order], class: "tbk-input-text", required: true %>
         </div>
         <div class="input-container">
           <%= label_tag :child_commerce_code, "Código de comercio:", class: "tbk-label" %>
-          <%= text_field_tag :child_commerce_code, detail[:commerce_code], class: "tbk-input-text" %>
+          <%= text_field_tag :child_commerce_code, detail[:commerce_code], class: "tbk-input-text", required: true %>
         </div>
         <div class="input-container">
           <%= label_tag :child_buy_order, "Orden de compra (tienda hija):", class: "tbk-label" %>
-          <%= text_field_tag :child_buy_order, detail[:buy_order], class: "tbk-input-text" %>
+          <%= text_field_tag :child_buy_order, detail[:buy_order], class: "tbk-input-text", required: true %>
         </div>
         <div class="input-container">
           <%= label_tag :amount, "Monto a reembolsar:", class: "tbk-label" %>
-          <%= text_field_tag :amount, detail[:amount], class: "tbk-input-text" %>
+          <%= number_field_tag :amount, detail[:amount], class: "tbk-input-text", required: true, min: 1, step: 1 %>
         </div>
       </div>
       <div class="tbk-card-footer">

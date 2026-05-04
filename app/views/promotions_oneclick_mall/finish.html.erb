@@ -70,11 +70,11 @@
     <div class="card-multi-field">
       <div class="input-container">
         <%= label_tag :child_commerce_amount1, 'Monto:', class: 'tbk-label' %>
-        <%= number_field_tag :child_commerce_amount1, 10000, class: 'tbk-input-text' %>
+        <%= number_field_tag :child_commerce_amount1, 10000, class: 'tbk-input-text', required: true, min: 1, step: 1 %>
       </div>
       <div class="input-container">
         <%= label_tag :child_commerce_installments1, 'Cuotas:', class: 'tbk-label' %>
-        <%= number_field_tag :child_commerce_installments1, 0, class: 'tbk-input-text' %>
+        <%= number_field_tag :child_commerce_installments1, 0, class: 'tbk-input-text', required: true, min: 0, step: 1 %>
       </div>
     </div>
 
@@ -82,11 +82,11 @@
     <div class="card-multi-field">
       <div class="input-container">
         <%= label_tag :child_commerce_amount2, 'Monto:', class: 'tbk-label' %>
-        <%= number_field_tag :child_commerce_amount2, 5000, class: 'tbk-input-text' %>
+        <%= number_field_tag :child_commerce_amount2, 5000, class: 'tbk-input-text', required: true, min: 1, step: 1 %>
       </div>
       <div class="input-container">
         <%= label_tag :child_commerce_installments2, 'Cuotas:', class: 'tbk-label' %>
-        <%= number_field_tag :child_commerce_installments2, 0, class: 'tbk-input-text' %>
+        <%= number_field_tag :child_commerce_installments2, 0, class: 'tbk-input-text', required: true, min: 0, step: 1 %>
       </div>
     </div>
 
