@@ -18,9 +18,7 @@ class PromotionsOneclickMallController < ApplicationController
       @request_data = create_ins
       @respond_data = @resp.with_indifferent_access
     rescue StandardError => e
-      Rails.logger.error(e)
-      flash[:alert] = "Ocurrió un error inesperado: #{e.message}"
-      render ERROR_PAGE, locals: { error: e.message }
+      render_error(e)
     end
   end
 
@@ -41,9 +39,7 @@ class PromotionsOneclickMallController < ApplicationController
         tbk_user: @tbk_user
       }
     rescue StandardError => e
-      Rails.logger.error(e)
-      flash[:alert] = "Ocurrió un error inesperado: #{e.message}"
-      render ERROR_PAGE, locals: { error: e.message }
+      render_error(e)
     end
   end
 
@@ -55,9 +51,7 @@ class PromotionsOneclickMallController < ApplicationController
       @resp = @inscription.delete(@tbk_user, @username)
       @respond_data = {}
     rescue StandardError => e
-      Rails.logger.error(e)
-      flash[:alert] = "Ocurrió un error inesperado: #{e.message}"
-      render ERROR_PAGE, locals: { error: e.message }
+      render_error(e)
     end
   end
 
@@ -90,9 +84,7 @@ class PromotionsOneclickMallController < ApplicationController
       @resp = @tx.authorize(@username, @tbk_user, @buy_order, @details)
       @respond_data = @resp.with_indifferent_access
     rescue StandardError => e
-      Rails.logger.error(e)
-      flash[:alert] = "Ocurrió un error inesperado: #{e.message}"
-      render ERROR_PAGE, locals: { error: e.message }
+      render_error(e)
     end
   end
 
@@ -103,9 +95,7 @@ class PromotionsOneclickMallController < ApplicationController
       @resp = @tx.status(@buy_order)
       @respond_data = @resp.with_indifferent_access
     rescue StandardError => e
-      Rails.logger.error(e)
-      flash[:alert] = "Ocurrió un error inesperado: #{e.message}"
-      render ERROR_PAGE, locals: { error: e.message }
+      render_error(e)
     end
   end
 
@@ -119,9 +109,7 @@ class PromotionsOneclickMallController < ApplicationController
       @resp = @tx.refund(@buy_order, @child_commerce_code, @child_buy_order, @amount)
       @respond_data = @resp.with_indifferent_access
     rescue StandardError => e
-      Rails.logger.error(e)
-      flash[:alert] = "Ocurrió un error inesperado: #{e.message}"
-      render ERROR_PAGE, locals: { error: e.message }
+      render_error(e)
     end
   end
 
@@ -131,9 +119,7 @@ class PromotionsOneclickMallController < ApplicationController
       @resp = @bin_info.query_bin(@tbk_user)
       @respond_data = @resp.with_indifferent_access
     rescue StandardError => e
-      Rails.logger.error(e)
-      flash[:alert] = "Ocurrió un error inesperado: #{e.message}"
-      render ERROR_PAGE, locals: { error: e.message }
+      render_error(e)
     end
   end
 
@@ -165,6 +151,29 @@ class PromotionsOneclickMallController < ApplicationController
     Integer(required_text_param(key).to_s, 10)
   rescue ArgumentError
     raise ArgumentError, "El parámetro #{key} debe ser un entero."
+  end
+
+  def render_error(exception)
+    Rails.logger.error(exception)
+    error_message = displayable_error_message(exception)
+    flash[:alert] = error_message
+    render ERROR_PAGE, locals: { error: error_message }
+  end
+
+  def displayable_error_message(exception)
+    current = exception
+
+    while current
+      return current.message if sdk_exception?(current)
+
+      current = current.cause
+    end
+
+    "Ocurrió un error inesperado al procesar la operación."
+  end
+
+  def sdk_exception?(exception)
+    exception.class.name.start_with?("Transbank::")
   end
 
 end
