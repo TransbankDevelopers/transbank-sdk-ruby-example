@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   root to: "product_index#index"
 
   get "/oneclick-mall", to: "home#oneclick_mall", as: :oneclick_mall
+  get "/promotions-oneclick-mall", to: "promotions_oneclick_mall#start", as: :promotions_oneclick_mall_start
   get "/patpass-comercio", to: "patpass_comercio#start", as: :patpass_comercio
   match "/patpass-comercio/commit", to: "patpass_comercio#commit", via: [ :get, :post ], as: :patpass_comercio_commit
   match "/patpass-comercio/voucher", to: "patpass_comercio#voucher", via: [ :get, :post ], as: :patpass_comercio_voucher
@@ -66,6 +67,14 @@ Rails.application.routes.draw do
   get "oneclick-mall/delete", to: "oneclick_mall#delete", as: :oneclick_mall_delete
   get "oneclick-mall/refund", to: "oneclick_mall#refund", as: :oneclick_mall_refund
   get "oneclick-mall/status", to: "oneclick_mall#status", as: :oneclick_mall_status
+
+  # --- Oneclick Mall Promociones ---
+  get "promotions-oneclick-mall/finish", to: "promotions_oneclick_mall#finish", as: :promotions_oneclick_mall_finish
+  get "promotions-oneclick-mall/authorize", to: "promotions_oneclick_mall#authorize", as: :promotions_oneclick_mall_authorize
+  get "promotions-oneclick-mall/delete", to: "promotions_oneclick_mall#delete", as: :promotions_oneclick_mall_delete
+  get "promotions-oneclick-mall/refund", to: "promotions_oneclick_mall#refund", as: :promotions_oneclick_mall_refund
+  get "promotions-oneclick-mall/status", to: "promotions_oneclick_mall#status", as: :promotions_oneclick_mall_status
+  get "promotions-oneclick-mall/info-bin", to: "promotions_oneclick_mall#info_bin", as: :promotions_oneclick_mall_info_bin
 
   # --- Oneclick Mall Diferido ---
   # Controladores: OneclickMallDeferredController
