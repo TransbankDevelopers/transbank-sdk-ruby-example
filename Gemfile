@@ -1,17 +1,17 @@
 source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.1.1"
+gem "rails", "~> 8.1.2", ">= 8.1.2.1"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
-gem "propshaft", ">= 1.2.0"
+gem "propshaft", ">= 1.3.2"
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", ">= 2.1"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
-gem "importmap-rails", ">= 2.2.0"
+gem "importmap-rails", ">= 2.2.3"
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
-gem "turbo-rails"
+gem "turbo-rails", ">= 2.0.19"
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
@@ -24,8 +24,8 @@ gem "jbuilder"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
-gem "solid_cache"
-gem "solid_queue", ">= 1.2.1"
+gem "solid_cache", ">= 1.0.8"
+gem "solid_queue", ">= 1.2.2"
 gem "solid_cable", ">= 3.0.12"
 
 # Reduces boot times through caching; required in config/boot.rb
@@ -58,7 +58,7 @@ end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
-  gem "web-console"
+  gem "web-console", ">= 4.3.0"
 end
 
 group :test do
@@ -67,4 +67,4 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem 'dotenv-rails'
+gem 'dotenv-rails', '>= 3.2.0'
