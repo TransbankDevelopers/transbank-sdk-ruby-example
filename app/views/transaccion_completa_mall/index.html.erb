@@ -1,0 +1,13 @@
+<%
+  @navigation = { 'form' => 'Formulario' }
+%>
+<%= render 'shared/breadcrumbs', breadcrumbs: [
+  { label: 'Inicio', path: root_path },
+  { label: 'Webpay Transacción Completa Mall', path: transaccion_completa_mall_index_path }
+] %>
+
+
+<h1 id="form">Transacción Completa Mall - Formulario</h1>
+<p>En esta primera etapa necesitas obtener los datos esenciales de la tarjeta de crédito, débito o prepago del
+    titular. Utiliza el formulario para recolectar esta información de manera segura.</p>
+    <%= render partial: 'partials/credit_card', locals: { action: transaccion_completa_mall_create_path } %>

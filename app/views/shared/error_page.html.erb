@@ -4,9 +4,9 @@
   <p class="mb-32">Lo sentimos, ha ocurrido un error inesperado. Si el problema persiste comunícate con nosotros en nuestro canal de <a class="tbk-link" href="https://invitacion-slack.transbankdevelopers.cl/slack_community" target="_blank">slack</a> </p>
 
   <% if local_assigns[:error] %>
-    <p>Detalles del error (solo para depuración):</p>
-    <div class="error-details">
-      <%= error %>
+    <p class="mb-16">Detalles del error:</p>
+    <div class="snippet-container mb-32">
+      <pre class="mb-16"><code class="language-text"><%= h(error) %></code></pre>
     </div>
   <% end %>
 

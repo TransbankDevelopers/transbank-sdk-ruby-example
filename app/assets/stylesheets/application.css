@@ -86,6 +86,7 @@
   --tbk-table-header: hsl(329.58deg 100% 41.76% / 5%);
   --bg-hover: #343a46;
   --tbk-white-red: #f9f6f6;
+  --header-h: 80px;
 }
 
 * {
@@ -97,6 +98,11 @@ body {
   font-family: "Open Sans", sans-serif;
   margin: 0px;
   padding: 0px;
+}
+
+html {
+  scroll-padding-top: var(--header-h);
+  scroll-behavior: smooth;
 }
 
 code {
@@ -263,7 +269,9 @@ code {
   margin-bottom: 16px;
 }
 
-
+.mr-16 {
+  margin-right: 16px;
+}
 
 .tbk-link {
   color: var(--tbk-red);
@@ -513,7 +521,7 @@ code {
   padding-left: 160px;
   padding-right: 160px;
   width: 100%;
-  height: 80px;
+  height: var(--header-h);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.08);
   background-color: var(--elevation);
   position: sticky;
@@ -1101,6 +1109,49 @@ code {
   animation: spin 1s ease-in-out infinite;
 }
 
+/* tx completa */
+
+.card-inputs-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 50px;
+  margin-top: 70px;
+}
+
+.card-split-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 31px;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-top: 1.5rem;
+}
+
+.card-border {
+  border: 1px solid #c9d0e4;
+  border-radius: 1px;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.card-wrapper {
+  z-index: 0;
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -1183,8 +1234,8 @@ code {
 }
 
 .details-item {
-  margin-bottom: 1rem; 
-  padding: 0.5rem; 
-  border: 1px solid #eee; 
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border: 1px solid #eee;
   border-radius: 4px;
 }

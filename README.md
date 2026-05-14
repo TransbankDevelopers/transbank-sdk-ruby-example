@@ -15,7 +15,6 @@ Una vez tengas clonado el repositorio, debes instalar las dependencias del proye
 
 ```bash
 bundle install
-npm install
 ```
 
 ## Ejecución Desarrollo

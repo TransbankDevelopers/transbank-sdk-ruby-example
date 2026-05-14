@@ -1,0 +1,84 @@
+<%
+  @navigation = { 'request' => 'Petición', 'response' => 'Respuesta', 'form' => 'Formulario' }
+%>
+
+<%= render 'shared/breadcrumbs', breadcrumbs: [
+  { label: 'Inicio', path: root_path },
+  { label: 'Webpay Transacción Completa Diferida', path: transaccion_completa_diferida_index_path },
+  { label: 'Consulta de cuotas', path: transaccion_completa_diferida_installments_path }
+] %>
+
+<h1>Transacción Completa Diferida - Consulta de cuotas</h1>
+<p class="mb-32">En esta etapa, realizaremos una consulta de cuotas para conocer sus condiciones. Es importante
+    destacar que este paso es opcional y se utiliza únicamente si deseas ofrecer opciones de pago a plazos.</p>
+
+<h2 id="request">Paso 1: Petición</h2>
+<p class="mb-32">Para llevar a cabo la consulta de cuotas, debemos enviar los siguientes datos relevantes.</p>
+
+<pre class="mb-16">
+  <code class="language-ruby">
+require 'transbank/sdk'
+
+# Configuración de la transacción
+@tx = Transbank::Webpay::TransaccionCompleta::Transaction.new(
+  ::Transbank::Common::IntegrationCommerceCodes::TRANSACCION_COMPLETA_DEFERRED,
+  ::Transbank::Common::IntegrationApiKeys::WEBPAY
+)
+
+resp = @tx.installments(token, installments);
+  </code>
+</pre>
+
+<h2 id="response">Paso 2: Respuesta</h2>
+<p>Una vez realizada la consulta de cuotas, recibirás los siguientes datos de respuesta:</p>
+
+<pre class="mb-16">
+  <code class="language-json"><%= JSON.pretty_generate(@response_data.to_h) %></code>
+</pre>
+
+<h2 id="form">Confirmar Transacción</h2>
+<p class="mb-16">Si decides utilizar cuotas y estás satisfecho con las condiciones obtenidas en la consulta, el
+    siguiente paso sería confirmar la transacción.</p>
+
+<div class="tbk-card">
+    <div class="input-container mb-32">
+        <label for="token" class="tbk-label">Token</label>
+        <input type="text" id="token" name="token" class="tbk-input-text" value="<%= @request_data['token'] %>">
+    </div>
+    <div class="input-container ">
+        <label for="idQueryInstallments" class="tbk-label">ID de consulta de cuotas (Opcional)</label>
+        <input type="text" id="idQueryInstallments" name="idQueryInstallments" class="tbk-input-text"
+            value="<%= @response_data['id_query_installments'] if @response_data %>">
+    </div>
+
+    <div class="tbk-card-footer">
+        <a href="#" id="confirmLink" class="tbk-button primary">CONFIRMAR TRANSACCIÓN</a>
+    </div>
+</div>
+
+
+<% content_for :scripts do %>
+    <script>
+        const tokenInput = document.getElementById('token');
+        const idQueryInstallmentsInput = document.getElementById('idQueryInstallments');
+        const confirmLink = document.getElementById('confirmLink');
+
+        const baseUrl = "<%= transaccion_completa_diferida_commit_path %>"; 
+
+        function updateLink() {
+            const token = tokenInput.value;
+            const idQueryInstallments = idQueryInstallmentsInput.value;
+
+            const params = new URLSearchParams();
+            if (token) params.append('token', token);
+            if (idQueryInstallments) params.append('idQueryInstallments', idQueryInstallments);
+
+            confirmLink.href = baseUrl + '?' + params.toString();
+        }
+
+        tokenInput.addEventListener('input', updateLink);
+        idQueryInstallmentsInput.addEventListener('input', updateLink);
+
+        updateLink();
+    </script>
+<% end %>

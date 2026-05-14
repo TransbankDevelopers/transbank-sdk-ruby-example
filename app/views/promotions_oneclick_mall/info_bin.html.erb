@@ -1,0 +1,36 @@
+<%= render 'shared/breadcrumbs', breadcrumbs: [
+  { label: 'Inicio', path: root_path },
+  { label: 'Webpay Oneclick Mall Promociones', path: '/promotions-oneclick-mall' },
+  { label: 'Consulta servicio de bines', path: '/promotions-oneclick-mall/info-bin' }
+] %>
+
+<h1>Webpay Oneclick Mall Promociones - Consulta servicio de bines</h1>
+<p class="mb-32">
+  Con esta operación puedes consultar el BIN asociado al medio de pago inscrito usando el valor de
+  <code>tbk_user</code>. Si el comercio no tiene habilitado este servicio, la respuesta incluirá un error.
+</p>
+
+<h2 id="request">Paso 1: Petición</h2>
+<p class="mb-32">
+  Para realizar la consulta, necesitarás el <code>tbk_user</code> obtenido al finalizar la inscripción.
+  Utiliza ese identificador para efectuar una llamada a Oneclick::MallBinInfo.
+</p>
+
+<pre>
+  <code class="language-ruby">
+  @resp = @bin_info.query_bin(@tbk_user)
+  </code>
+</pre>
+
+<div class="mb-32">
+  <%= render partial: 'shared/request_table', locals: { data: { tbk_user: @tbk_user } } %>
+</div>
+
+<h2 id="response">Paso 2: Respuesta</h2>
+<p class="mb-32">
+  Transbank responderá con la información del BIN consultado.
+</p>
+
+<pre>
+  <code class="language-json"><%= JSON.pretty_generate(@respond_data) %></code>
+</pre>

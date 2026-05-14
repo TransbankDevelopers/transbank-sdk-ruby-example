@@ -1,5 +1,3 @@
-<%# app/views/partials/_sidebar.html.erb (Versión con Stimulus) %>
-
 <aside class="tbk-sidebar" id="sidebar-desk" data-controller="sidebar"
        data-sidebar-target="sidebar"> 
     <div class="toogle-btn-container">
@@ -21,9 +19,7 @@
                     </button>
                     <ul class="collapsible-content" id="collapse-webpay-plus" data-sidebar-target="collapsibleContent">
                         <li class="collapsible-items">
-                            <a href="<%= webpay_plus_create_path %>" class="tbk-sidebar-item" data-sidebar-target="sidebarItem">
-                                Flujo Completo
-                            </a>
+                            <%= link_to "Flujo Completo", webpay_plus_create_path, class: "tbk-sidebar-item", data: { sidebar_target: "sidebarItem", turbo: false } %>
                         </li>
                     </ul>
                 </li>
@@ -36,9 +32,7 @@
                     </button>
                     <ul class="collapsible-content" id="collapse-webpay-plus-mall" data-sidebar-target="collapsibleContent">
                         <li class="collapsible-items">
-                            <a href="<%= webpay_mall_create_path %>" class="tbk-sidebar-item" data-sidebar-target="sidebarItem">
-                                Flujo Completo
-                            </a>
+                            <%= link_to "Flujo Completo", webpay_mall_create_path, class: "tbk-sidebar-item", data: { sidebar_target: "sidebarItem", turbo: false } %>
                         </li>
                     </ul>
                 </li>
@@ -51,9 +45,7 @@
                     </button>
                     <ul class="collapsible-content" id="collapse-webpay-plus-deferred" data-sidebar-target="collapsibleContent">
                         <li class="collapsible-items">
-                            <a href="<%= webpay_deferred_create_path %>" class="tbk-sidebar-item" data-sidebar-target="sidebarItem">
-                                Flujo Completo
-                            </a>
+                            <%= link_to "Flujo Completo", webpay_deferred_create_path, class: "tbk-sidebar-item", data: { sidebar_target: "sidebarItem", turbo: false } %>
                         </li>
                     </ul>
                 </li>
@@ -66,9 +58,7 @@
                     </button>
                     <ul class="collapsible-content" id="collapse-webpay-mall-diferido" data-sidebar-target="collapsibleContent">
                         <li class="collapsible-items">
-                            <a href="<%= webpay_mall_deferred_create_path %>" class="tbk-sidebar-item" data-sidebar-target="sidebarItem">
-                                Flujo Completo
-                            </a>
+                            <%= link_to "Flujo Completo", webpay_mall_deferred_create_path, class: "tbk-sidebar-item", data: { sidebar_target: "sidebarItem", turbo: false } %>
                         </li>
                     </ul>
                 </li>
@@ -79,7 +69,6 @@
         <div>
             <p class="tbk-sidebar-item-title">Webpay Oneclick</p>
             <ul>
-
                 <li style="margin-bottom:20px;">
                     <button class="sidebar-collapsible-title" data-collapsible="oneclick-mall"
                             data-action="sidebar#toggleCollapsible" data-sidebar-target="collapsibleTitle">
@@ -88,13 +77,10 @@
                     </button>
                     <ul class="collapsible-content" id="collapse-oneclick-mall" data-sidebar-target="collapsibleContent">
                         <li class="collapsible-items">
-                            <a href="<%= oneclick_mall_start_path %>" class="tbk-sidebar-item" data-sidebar-target="sidebarItem">
-                                Flujo Completo
-                            </a>
+                            <%= link_to "Flujo Completo", oneclick_mall_start_path, class: "tbk-sidebar-item", data: { sidebar_target: "sidebarItem", turbo: false } %>
                         </li>
                     </ul>
                 </li>
-
 
                 <li style="margin-bottom:20px;">
                     <button class="sidebar-collapsible-title" data-collapsible="oneclick-mall-deferred"
@@ -104,9 +90,7 @@
                     </button>
                     <ul class="collapsible-content" id="collapse-oneclick-mall-deferred" data-sidebar-target="collapsibleContent">
                         <li class="collapsible-items">
-                            <a href="<%= oneclick_mall_deferred_start_path %>" class="tbk-sidebar-item" data-sidebar-target="sidebarItem">
-                                Flujo Completo
-                            </a>
+                            <%= link_to "Flujo Completo", oneclick_mall_deferred_start_path, class: "tbk-sidebar-item", data: { sidebar_target: "sidebarItem", turbo: false } %>
                         </li>
                     </ul>
                 </li>

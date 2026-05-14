@@ -1,0 +1,43 @@
+<%
+  @navigation = { 'request' => 'Petición', 'response' => 'Respuesta' }
+%>
+
+<%= render 'shared/breadcrumbs', breadcrumbs: [
+  { label: 'Inicio', path: root_path },
+  { label: 'Webpay Transacción Completa', path: transaccion_completa_index_path },
+  { label: 'Estado de transacción', path: transaccion_completa_status_path }
+] %>
+
+<h1>Transacción Completa - Estado de transacción</h1>
+<p class="mb-32">En esta fase, tendrás la capacidad de solicitar el estado actual de una transacción hasta 7 días
+    después de su realización. Es importante destacar que no hay límite en la cantidad de solicitudes de este tipo
+    durante este período. Sin embargo, una vez transcurridos los 7 días, ya no podrás revisar el estado de la
+    transacción.</p>
+
+<h2 id="request">Paso 1: Petición</h2>
+<p class="mb-32">Para llevar a cabo la solicitud de estado, necesitarás el token correspondiente a la transacción
+    de la cual deseas obtener información. Utiliza este token para realizar una llamada a
+    Transaction.status().
+</p>
+
+<pre class="mb-16">
+  <code class="language-ruby">
+require 'transbank/sdk'
+
+# Configuración de la transacción
+@tx = Transbank::Webpay::TransaccionCompleta::Transaction.new(
+  ::Transbank::Common::IntegrationCommerceCodes::TRANSACCION_COMPLETA,
+  ::Transbank::Common::IntegrationApiKeys::WEBPAY
+)
+
+resp = @tx.status(token)
+  </code>
+</pre>
+
+<h2 id="response">Paso 2: Respuesta</h2>
+<p class="mb-32">Transbank responderá con la siguiente información. Asegúrate de guardar estos detalles; lo único que necesitas
+    validar es que el campo "response_code" sea igual a cero.</p>
+
+<pre class="mb-16">
+  <code class="language-json"><%= h(JSON.pretty_generate(@response_data)) %></code>
+</pre>

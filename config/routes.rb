@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   get "product_index/index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -17,8 +18,10 @@ Rails.application.routes.draw do
   root to: "product_index#index"
 
   get "/oneclick-mall", to: "home#oneclick_mall", as: :oneclick_mall
-  get "/transaccion-completa", to: "home#transaccion_completa", as: :transaccion_completa
-  get "/patpass-comercio", to: "home#patpass_comercio", as: :patpass_comercio
+  get "/promotions-oneclick-mall", to: "promotions_oneclick_mall#start", as: :promotions_oneclick_mall_start
+  get "/patpass-comercio", to: "patpass_comercio#start", as: :patpass_comercio
+  match "/patpass-comercio/commit", to: "patpass_comercio#commit", via: [ :get, :post ], as: :patpass_comercio_commit
+  match "/patpass-comercio/voucher", to: "patpass_comercio#voucher", via: [ :get, :post ], as: :patpass_comercio_voucher
 
   # --- API Reference ---
   get "/api-reference/webpay-plus", to: "webpay_plus#show_operations", as: :webpay_plus_api_operations
@@ -65,6 +68,14 @@ Rails.application.routes.draw do
   get "oneclick-mall/refund", to: "oneclick_mall#refund", as: :oneclick_mall_refund
   get "oneclick-mall/status", to: "oneclick_mall#status", as: :oneclick_mall_status
 
+  # --- Oneclick Mall Promociones ---
+  get "promotions-oneclick-mall/finish", to: "promotions_oneclick_mall#finish", as: :promotions_oneclick_mall_finish
+  get "promotions-oneclick-mall/authorize", to: "promotions_oneclick_mall#authorize", as: :promotions_oneclick_mall_authorize
+  get "promotions-oneclick-mall/delete", to: "promotions_oneclick_mall#delete", as: :promotions_oneclick_mall_delete
+  get "promotions-oneclick-mall/refund", to: "promotions_oneclick_mall#refund", as: :promotions_oneclick_mall_refund
+  get "promotions-oneclick-mall/status", to: "promotions_oneclick_mall#status", as: :promotions_oneclick_mall_status
+  get "promotions-oneclick-mall/info-bin", to: "promotions_oneclick_mall#info_bin", as: :promotions_oneclick_mall_info_bin
+
   # --- Oneclick Mall Diferido ---
   # Controladores: OneclickMallDeferredController
   get "oneclick-mall-diferido/start", to: "oneclick_mall_deferred#start", as: :oneclick_mall_deferred_start
@@ -74,4 +85,43 @@ Rails.application.routes.draw do
   get "oneclick-mall-diferido/status", to: "oneclick_mall_deferred#status", as: :oneclick_mall_deferred_status
   get "oneclick-mall-diferido/refund", to: "oneclick_mall_deferred#refund", as: :oneclick_mall_deferred_refund
   get "oneclick-mall-diferido/capture", to: "oneclick_mall_deferred#capture", as: :oneclick_mall_deferred_capture
+
+  # --- TX Completa ---
+  # Controladores: TransaccionCompletaController
+  get "transaccion-completa", to: "transaccion_completa#index", as: :transaccion_completa_index
+  get "transaccion-completa/commit", to: "transaccion_completa#commit", as: :transaccion_completa_commit
+  post "transaccion-completa/installments", to: "transaccion_completa#installments", as: :transaccion_completa_installments
+  post "transaccion-completa/create", to: "transaccion_completa#create", as: :transaccion_completa_create
+  get "transaccion-completa/status", to: "transaccion_completa#status", as: :transaccion_completa_status
+  get "transaccion-completa/refund", to: "transaccion_completa#refund", as: :transaccion_completa_refund
+  
+  # --- TX Completa Mall ---
+  # Controladores: TransaccionCompletaMallController
+  get "transaccion-completa-mall", to: "transaccion_completa_mall#index", as: :transaccion_completa_mall_index
+  get "transaccion-completa-mall/commit", to: "transaccion_completa_mall#commit", as: :transaccion_completa_mall_commit
+  post "transaccion-completa-mall/installments", to: "transaccion_completa_mall#installments", as: :transaccion_completa_mall_installments
+  post "transaccion-completa-mall/create", to: "transaccion_completa_mall#create", as: :transaccion_completa_mall_create
+  get "transaccion-completa-mall/status", to: "transaccion_completa_mall#status", as: :transaccion_completa_mall_status
+  get "transaccion-completa-mall/refund", to: "transaccion_completa_mall#refund", as: :transaccion_completa_mall_refund
+  
+  # --- TX Completa Mall Diferida ---
+  # Controladores: TransaccionCompletaMallDiferidaController
+  get "transaccion-completa-mall-diferido", to: "transaccion_completa_mall_diferida#index", as: :transaccion_completa_mall_diferida_index
+  get "transaccion-completa-mall-diferido/commit", to: "transaccion_completa_mall_diferida#commit", as: :transaccion_completa_mall_diferida_commit
+  post "transaccion-completa-mall-diferido/installments", to: "transaccion_completa_mall_diferida#installments", as: :transaccion_completa_mall_diferida_installments
+  post "transaccion-completa-mall-diferido/create", to: "transaccion_completa_mall_diferida#create", as: :transaccion_completa_mall_diferida_create
+  get "transaccion-completa-mall-diferido/status", to: "transaccion_completa_mall_diferida#status", as: :transaccion_completa_mall_diferida_status
+  get "transaccion-completa-mall-diferido/refund", to: "transaccion_completa_mall_diferida#refund", as: :transaccion_completa_mall_diferida_refund
+  get "transaccion-completa-mall-diferido/capture", to: "transaccion_completa_mall_diferida#capture", as: :transaccion_completa_mall_diferida_capture
+  
+  # --- TX Completa Diferida ---
+  # Controladores: TransaccionCompletaDiferidaController
+  get "transaccion-completa-diferida", to: "transaccion_completa_diferida#index", as: :transaccion_completa_diferida_index
+  get "transaccion-completa-diferida/commit", to: "transaccion_completa_diferida#commit", as: :transaccion_completa_diferida_commit
+  post "transaccion-completa-diferida/installments", to: "transaccion_completa_diferida#installments", as: :transaccion_completa_diferida_installments
+  post "transaccion-completa-diferida/create", to: "transaccion_completa_diferida#create", as: :transaccion_completa_diferida_create
+  get "transaccion-completa-diferida/status", to: "transaccion_completa_diferida#status", as: :transaccion_completa_diferida_status
+  get "transaccion-completa-diferida/refund", to: "transaccion_completa_diferida#refund", as: :transaccion_completa_diferida_refund
+  get "transaccion-completa-diferida/capture", to: "transaccion_completa_diferida#capture", as: :transaccion_completa_diferida_capture
+
 end
