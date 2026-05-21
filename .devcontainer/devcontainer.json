@@ -16,6 +16,9 @@
         "source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
     ],
     "features": {
+        "ghcr.io/devcontainers/features/ruby:1": {
+            "version": "3.2.2"
+        },
         "ghcr.io/devcontainers-extra/features/zsh-plugins:0": {
             "plugins": "git zsh-autosuggestions zsh-syntax-highlighting",
             "omzPlugins": "https://github.com/zsh-users/zsh-autosuggestions https://github.com/zsh-users/zsh-syntax-highlighting"
@@ -50,6 +53,9 @@
                     "**/vendor/**": true,
                     "**/tmp/**": true,
                     "**/log/**": true
+                },
+                "rubyLsp.rubyVersionManager": {
+                    "identifier": "none"
                 },
                 "[ruby]": {
                     "editor.defaultFormatter": "Shopify.ruby-lsp"
