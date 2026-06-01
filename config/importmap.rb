@@ -7,4 +7,4 @@ pin "@hotwired/stimulus-loading", to: "stimulus-loading.js"
 pin_all_from "app/javascript/controllers", under: "controllers"
 pin "highlight.js", to: "https://cdn.skypack.dev/highlight.js"
 pin "highlight_init", to: "highlight_init.js"
-pin "card" # vendored en vendor/javascript/card.js (jessepollak/card 2.5.4)
+pin "card" # vendor/javascript/card.js (jessepollak/card 2.5.4)

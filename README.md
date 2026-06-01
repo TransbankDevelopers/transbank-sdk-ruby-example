@@ -6,7 +6,7 @@ Proyecto de ejemplo mostrando el paso a paso de como usar el SDK RUBY de transba
 
 ## Requisitos
 
-- Ruby 3.2
+- Ruby 3.4.9
 - Rails 8+
 
 ## Desarrollo con Dev Container (recomendado)
@@ -96,7 +96,7 @@ RAILS_ENV=production bin/rails assets:precompile
 rails s -p 3100 -e production
 ```
 
-Al terminar, deberías ver la URL para poder acceder al proyecto. Un ejemplo de la URL puede ser **http://127.0.0.1:3000**
+Al terminar, deberías ver la URL para poder acceder al proyecto. Un ejemplo de la URL puede ser **http://127.0.0.1:3100**
 
 ## Información para contribuir a este proyecto
 
