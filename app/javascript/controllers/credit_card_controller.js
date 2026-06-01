@@ -29,7 +29,7 @@ export default class CreditCardController extends Controller {
       defaults: {
         number: "4051 8856 0044 6623",
         name: "Nombre Completo",
-        expiry: "11/23",
+        expiry: "11/27",
         cvc: "123",
       },
     });
