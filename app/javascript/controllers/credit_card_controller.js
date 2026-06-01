@@ -17,9 +17,6 @@ export default class CreditCardController extends Controller {
       },
       width: 300,
       formatting: true,
-      messages: {
-        valid: "válido\n",
-      },
       placeholders: {
         number: "•••• •••• •••• ••••",
         name: "Nombre Completo",
