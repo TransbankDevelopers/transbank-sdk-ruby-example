@@ -11,7 +11,7 @@ Proyecto de ejemplo mostrando el paso a paso de como usar el SDK RUBY de transba
 
 ## Desarrollo con Dev Container (recomendado)
 
-La forma más rápida y consistente de empezar. Un contenedor preconfigurado con Ruby 3.2.2 (la misma versión que corre producción, provista por un feature del Dev Container) y todas las dependencias del proyecto, sin necesidad de instalar nada en la máquina local más allá de Docker y VS Code.
+La forma más rápida y consistente de empezar. Un contenedor preconfigurado con Ruby 3.4.9 (la misma versión que corre producción, provista por un feature del Dev Container) y todas las dependencias del proyecto, sin necesidad de instalar nada en la máquina local más allá de Docker y VS Code.
 
 ### Requisitos del Dev Container
 
