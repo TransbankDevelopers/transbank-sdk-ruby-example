@@ -1,10 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 import Card from "card";
 
-// Renderiza la tarjeta animada (jessepollak/card) sobre el formulario de pago.
-// La librería se sirve vía importmap desde vendor/javascript/card.js y, al
-// importarse, inyecta sus propios estilos (.jp-card) mediante style-loader.
-export default class extends Controller {
+export default class CreditCardController extends Controller {
   connect() {
     const wrapper = this.element.querySelector(".card-wrapper");
     if (!wrapper) return;
@@ -37,7 +34,6 @@ export default class extends Controller {
       },
     });
 
-    // Dispara 'input' en los campos precargados para que la tarjeta refleje sus valores.
     this.element
       .querySelectorAll('input[name="number"], input[name="expiry"], input[name="cvc"]')
       .forEach((input) => {
