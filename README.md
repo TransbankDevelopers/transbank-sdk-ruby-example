@@ -6,8 +6,57 @@ Proyecto de ejemplo mostrando el paso a paso de como usar el SDK RUBY de transba
 
 ## Requisitos
 
-- Ruby 3.3
+- Ruby 3.4.9
 - Rails 8+
+
+## Desarrollo con Dev Container (recomendado)
+
+La forma más rápida y consistente de empezar. Un contenedor preconfigurado con Ruby 3.4.9 (la misma versión que corre producción, provista por un feature del Dev Container) y todas las dependencias del proyecto, sin necesidad de instalar nada en la máquina local más allá de Docker y VS Code.
+
+### Requisitos del Dev Container
+
+-   **Docker**
+    -   **macOS:** [Docker Desktop](https://www.docker.com/products/docker-desktop/) o [OrbStack](https://orbstack.dev) (alternativa más liviana y con mejor rendimiento de I/O)
+    -   **Linux / WSL2:** Docker Engine
+-   **Visual Studio Code** con la extensión [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+
+### Levantar el contenedor
+
+1. Clonar el repositorio y abrirlo en VS Code.
+2. VS Code detectará el directorio `.devcontainer/` y ofrecerá la opción **"Reopen in Container"** en la esquina inferior derecha. Si no aparece, abrir la paleta de comandos:
+    - **macOS:** `Cmd + Shift + P`
+    - **Linux / Windows:** `Ctrl + Shift + P`
+
+    y buscar **"Dev Containers: Reopen in Container"**.
+3. **La primera vez tarda unos minutos** (descarga la imagen base y ejecuta el setup inicial). Las siguientes aperturas son inmediatas: VS Code reutiliza el contenedor existente.
+
+Durante la creación inicial, el contenedor ejecuta automáticamente (ver `.devcontainer/post-create.sh`):
+-   `bundle install` (dependencias de Ruby, si no están ya instaladas)
+-   Generación del archivo `.env` con `RAILS_ENV=development` y un `SECRET_KEY_BASE`
+-   `bin/rails db:prepare` (crea y migra la base de datos)
+
+### Ejecutar la aplicación
+
+Abrir una terminal en VS Code (`` Ctrl + ` `` o `` Cmd + ` ``) y levantar el servidor:
+
+```bash
+rails s
+```
+
+Acceder desde el navegador a **http://localhost:3000**. El puerto `3000` ya viene reenviado en `devcontainer.json`.
+
+> Si el navegador no llega al servidor, levantarlo con `rails s -b 0.0.0.0`. Desde Rails 7.1 el server bindea a `localhost` por defecto en desarrollo; el flag fuerza que escuche en todas las interfaces del contenedor para que el port forwarding del Dev Container lo exponga al host.
+
+### Notas para usuarios de macOS
+
+-   **Arquitectura:** la imagen base soporta tanto Intel (x86_64) como Apple Silicon (arm64 — M1/M2/M3/M4). No requiere configuración adicional.
+-   **Rendimiento del filesystem:** los bind mounts en Docker Desktop para Mac son más lentos que en Linux. Para este proyecto el impacto es mínimo, pero si se observa lentitud trabajando con `vendor/` o `tmp/`, [OrbStack](https://orbstack.dev) ofrece mejor rendimiento de I/O sin cambios en el flujo de trabajo.
+-   **Atajos de teclado:** en este README los `Ctrl` mostrados equivalen a `Cmd` en macOS.
+
+### Solución de problemas frecuentes
+
+**No es posible acceder a `http://localhost:3000` desde el navegador**  
+Volver a levantar el servidor con `rails s -b 0.0.0.0` para que escuche en todas las interfaces del contenedor. Si el problema continúa, revisar la pestaña **"Ports"** en VS Code para confirmar que el puerto 3000 está reenviado correctamente.
 
 ## Instalación
 
@@ -47,7 +96,7 @@ RAILS_ENV=production bin/rails assets:precompile
 rails s -p 3100 -e production
 ```
 
-Al terminar, deberías ver la URL para poder acceder al proyecto. Un ejemplo de la URL puede ser **http://127.0.0.1:3000**
+Al terminar, deberías ver la URL para poder acceder al proyecto. Un ejemplo de la URL puede ser **http://127.0.0.1:3100**
 
 ## Información para contribuir a este proyecto
 

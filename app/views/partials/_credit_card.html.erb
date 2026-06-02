@@ -1,4 +1,4 @@
-<div class="tbk-shadow-2 tbk-card ">
+<div class="tbk-shadow-2 tbk-card " data-controller="credit-card">
     <%= form_with(url: action, method: :post, id: "card-form", data: { turbo: false }) do |form| %>
 
         <div class="card-container">
@@ -37,57 +37,3 @@
         </div>
     <% end %>
 </div>
-
-<script>
-    function initializeCard() {
-        if (typeof Card !== 'undefined' && document.querySelector('.card-wrapper')) {
-            new Card({
-                form: '#card-form',
-                container: '.card-wrapper',
-
-                formSelectors: {
-                    number: 'input[name="number"]',
-                    name: 'input[name="name"]',
-                    expiry: 'input[name="expiry"]',
-                    cvc: 'input[name="cvc"]'
-                },
-                width: 300,
-                formatting: true,
-                messages: {
-                    valid: 'válido\n'
-                },
-                placeholders: {
-                    number: '•••• •••• •••• ••••',
-                    name: 'Nombre Completo',
-                    expiry: 'MM/YY',
-                    cvc: 'CVC'
-                },
-                defaults: {
-                    number: '4051 8856 0044 6623',
-                    name: 'Nombre Completo',
-                    expiry: '11/23',
-                    cvc: '123'
-                }
-            });
-        }
-    }
-
-
-    document.addEventListener('DOMContentLoaded', () => {
-        initializeCard();
-
-        const inputs = document.querySelectorAll(
-            'input[name="cardNumber"], input[name="cardExpirationDate"], input[name="cvv"]'
-        );
-
-        inputs.forEach(input => {
-            if (input.value && input.value.trim() !== '') {
-                const event = new Event('input', {
-                    bubbles: true
-                });
-
-                input.dispatchEvent(event);
-            }
-        });
-    });
-</script>
