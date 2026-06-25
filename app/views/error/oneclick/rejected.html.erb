@@ -1,0 +1,38 @@
+<%= render 'shared/breadcrumbs', breadcrumbs: breadcrumbs %>
+
+<h1 id="inscription-failed"><%= product %> - Inscripción Fallida</h1>
+<p class="mb-32">
+  En esta fase pueden surgir inconvenientes, ya sea con el titular de la tarjeta o a nivel bancario, lo que
+  resulta en una inscripción fallida.
+</p>
+
+<h2 id="data">Paso 1: Datos recibidos</h2>
+<p class="mb-32">
+  Después de finalizar el flujo en el formulario de inscripción, recibirás un GET con la siguiente información:
+</p>
+
+<pre>
+  <code class="language-json"><%= JSON.pretty_generate({ TBK_TOKEN: token }) %></code>
+</pre>
+
+<h2 id="request">Paso 2: Petición de autorización</h2>
+<p class="mb-32">
+  Utiliza el token recibido para finalizar la Inscripción mediante una nueva llamada a Oneclick.
+</p>
+
+<pre>
+  <code class="language-ruby">
+  @resp = @inscription.finish(@token)
+  </code>
+</pre>
+
+<h2 id="response">Paso 3: Respuesta</h2>
+<p class="mb-32">
+  Transbank responderá con la siguiente información.
+</p>
+
+<pre class="mb-32">
+  <code class="language-json"><%= JSON.pretty_generate(response_data) %></code>
+</pre>
+
+<p class="mb-32">En este caso la inscripción fue rechazada, tendrás que repetir el proceso</p>
