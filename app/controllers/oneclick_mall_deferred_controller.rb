@@ -3,6 +3,9 @@ class OneclickMallDeferredController < ApplicationController
 
   logger = Logger.new(STDOUT)
   ERROR_PAGE = "shared/error_page".freeze
+  PRODUCT = "Oneclick Mall Diferido".freeze
+  REJECTED_PAGE = "error/oneclick/rejected".freeze
+  RECOVER_PAGE = "error/oneclick/recover".freeze
   before_action :set_transbank_transaction
 
   def start
@@ -30,13 +33,54 @@ class OneclickMallDeferredController < ApplicationController
   def finish
     begin
       @req = params.as_json
-      @token = @req["TBK_TOKEN"]
-      @resp = @inscription.finish(@token)  
       @response_url = oneclick_mall_deferred_finish_url
+      @token = @req["TBK_TOKEN"]
+
+      if @req["TBK_ORDEN_COMPRA"].present?
+        @request_data = @req.slice("TBK_ORDEN_COMPRA", "TBK_TOKEN", "TBK_ID_SESION")
+        @navigation = {
+          "inscription-failed" => "Inscripción Fallida",
+          "data" => "Datos recibidos",
+          "request" => "Petición",
+          "response" => "Respuesta"
+        }
+        return render RECOVER_PAGE, locals: {
+          breadcrumbs: [
+            { label: "Inicio", path: root_path },
+            { label: PRODUCT, path: oneclick_mall_deferred_start_path },
+            { label: "Inscripción anulada", path: oneclick_mall_deferred_finish_path }
+          ],
+          product: PRODUCT,
+          request_data: @request_data
+        }
+      end
+
+      @resp = @inscription.finish(@token)  
       @respond_data = @resp.with_indifferent_access
-      session[:tbk_user] = @respond_data[:tbk_user]
+      response_code = @respond_data[:response_code] || @respond_data[:responseCode] || 0
+
+      if response_code.to_i != 0
+        @navigation = {
+          "inscription-failed" => "Inscripción Fallida",
+          "data" => "Datos recibidos",
+          "request" => "Petición",
+          "response" => "Respuesta"
+        }
+        return render REJECTED_PAGE, locals: {
+          breadcrumbs: [
+            { label: "Inicio", path: root_path },
+            { label: PRODUCT, path: oneclick_mall_deferred_start_path },
+            { label: "Inscripción Fallida", path: oneclick_mall_deferred_finish_path }
+          ],
+          product: PRODUCT,
+          response_data: @respond_data,
+          token: @token
+        }
+      end
+
+      session[:tbk_user] = @respond_data[:tbk_user] || @respond_data[:tbkUser]
       @username = session[:username]
-      @tbk_user = @respond_data[:tbk_user]
+      @tbk_user = session[:tbk_user]
       @child_commerce_code1 = ::Transbank::Common::IntegrationCommerceCodes::ONECLICK_MALL_DEFERRED_CHILD1
       @child_commerce_code2 = ::Transbank::Common::IntegrationCommerceCodes::ONECLICK_MALL_DEFERRED_CHILD2
       @request_data  = {
@@ -158,6 +202,3 @@ class OneclickMallDeferredController < ApplicationController
   end
 
 end
-
-
-

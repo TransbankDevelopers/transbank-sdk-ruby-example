@@ -1,0 +1,23 @@
+<%= render 'shared/breadcrumbs', breadcrumbs: breadcrumbs %>
+
+<h1 id="inscription-failed"><%= product %> - Inscripción anulada</h1>
+<p class="mb-32">
+  La inscripción ha sido anulada por el usuario. En esta instancia, la inscripción fue abandonada al seleccionar
+  la opción de "Abandonar y volver al comercio".
+</p>
+
+<h2 id="data">Datos recibidos</h2>
+<p class="mb-32">
+  Después de que el usuario anule la inscripción en el formulario de pago, recibirás un GET con la siguiente
+  información:
+</p>
+
+<pre>
+  <code class="language-json"><%= JSON.pretty_generate(request_data) %></code>
+</pre>
+
+<h2>¡Se abandonó la inscripción!</h2>
+<p class="mb-32">
+  Este mensaje indica que la inscripción ha sido cancelada por decisión del usuario. Si tienes alguna pregunta o
+  necesitas asistencia, no dudes en contactarnos.
+</p>
