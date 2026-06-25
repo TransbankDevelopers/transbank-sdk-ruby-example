@@ -4,6 +4,13 @@ class OneclickMallController < ApplicationController
   logger = Logger.new(STDOUT)
   ERROR_PAGE = "shared/error_page".freeze
   PRODUCT = "Oneclick Mall".freeze
+  INSCRIPTION_FAILED = "Inscripción Fallida".freeze
+  FAILED_NAVIGATION = {
+    "inscription-failed" => INSCRIPTION_FAILED,
+    "data" => "Datos recibidos",
+    "request" => "Petición",
+    "response" => "Respuesta"
+  }.freeze
   REJECTED_PAGE = "error/oneclick/rejected".freeze
   RECOVER_PAGE = "error/oneclick/recover".freeze
   before_action :set_transbank_transaction
@@ -38,12 +45,7 @@ class OneclickMallController < ApplicationController
 
       if @req["TBK_ORDEN_COMPRA"].present?
         @request_data = @req.slice("TBK_ORDEN_COMPRA", "TBK_TOKEN", "TBK_ID_SESION")
-        @navigation = {
-          "inscription-failed" => "Inscripción Fallida",
-          "data" => "Datos recibidos",
-          "request" => "Petición",
-          "response" => "Respuesta"
-        }
+        @navigation = FAILED_NAVIGATION
         return render RECOVER_PAGE, locals: {
           breadcrumbs: [
             { label: "Inicio", path: root_path },
@@ -60,17 +62,12 @@ class OneclickMallController < ApplicationController
       response_code = @respond_data[:response_code] || @respond_data[:responseCode] || 0
 
       if response_code.to_i != 0
-        @navigation = {
-          "inscription-failed" => "Inscripción Fallida",
-          "data" => "Datos recibidos",
-          "request" => "Petición",
-          "response" => "Respuesta"
-        }
+        @navigation = FAILED_NAVIGATION
         return render REJECTED_PAGE, locals: {
           breadcrumbs: [
             { label: "Inicio", path: root_path },
             { label: PRODUCT, path: oneclick_mall_start_path },
-            { label: "Inscripción Fallida", path: oneclick_mall_finish_path }
+            { label: INSCRIPTION_FAILED, path: oneclick_mall_finish_path }
           ],
           product: PRODUCT,
           response_data: @respond_data,
