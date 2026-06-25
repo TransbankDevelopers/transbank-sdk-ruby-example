@@ -5,7 +5,19 @@ sed -i 's/ZSH_THEME="devcontainers"/ZSH_THEME="robbyrussell"/' "$HOME/.zshrc" ||
 
 echo "📂 current dir: $(pwd)"
 
-bundle check || bundle install
+if ! bundle check; then
+    bundle install || {
+        echo "⚠️ bundle install falló, limpiando instalación parcial de gems y reintentando..." >&2
+
+        rm -rf /usr/local/rvm/gems/default/gems/prism-*
+        rm -rf /usr/local/rvm/gems/default/cache/prism-*.gem
+        rm -rf /usr/local/rvm/gems/default/specifications/prism-*.gemspec
+
+        bundle install
+    }
+fi
+
+gem install ruby-lsp || true
 
 if [ ! -f .env ]; then
     secret="$(bin/rails secret)"
