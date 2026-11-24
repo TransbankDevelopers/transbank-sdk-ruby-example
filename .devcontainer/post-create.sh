@@ -21,9 +21,9 @@ fi
 
 gem install ruby-lsp || true
 
-if [ ! -f .env ]; then
+if [[ ! -f .env ]]; then
     secret="$(bin/rails secret)"
-    if [ -z "$secret" ]; then
+    if [[ -z "$secret" ]]; then
         echo "❌ No se pudo generar SECRET_KEY_BASE (bin/rails secret falló o devolvió vacío)" >&2
         exit 1
     fi
