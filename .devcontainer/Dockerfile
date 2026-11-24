@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/ruby:3.4-bookworm
+FROM mcr.microsoft.com/devcontainers/ruby:3-3.4-trixie
 
 USER root
 

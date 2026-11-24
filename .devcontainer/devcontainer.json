@@ -1,11 +1,10 @@
 {
     "name": "Transbank SDK Ruby Example",
-    "build": {
-        "dockerfile": "Dockerfile",
-        "context": ".."
-    },
-    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
-    "postCreateCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/post-create.sh",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/workspaces/transbank-sdk-ruby-example",
+    "postCreateCommand": "bash /workspaces/transbank-sdk-ruby-example/.devcontainer/post-create.sh",
+    "shutdownAction": "stopCompose",
     "forwardPorts": [
         3000
     ],
@@ -21,7 +20,7 @@
     ],
     "features": {
         "ghcr.io/devcontainers/features/ruby:1": {
-            "version": "3.4.9"
+            "version": "3.4.13"
         },
         "ghcr.io/devcontainers-extra/features/zsh-plugins:0": {
             "plugins": "git zsh-autosuggestions zsh-syntax-highlighting",

@@ -1,0 +1,14 @@
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    command: sleep infinity
+    volumes:
+      - ..:/workspaces/transbank-sdk-ruby-example:cached
+      - tmp_cache:/workspaces/transbank-sdk-ruby-example/tmp/cache
+      - ruby_lsp:/workspaces/transbank-sdk-ruby-example/.ruby-lsp
+
+volumes:
+  tmp_cache:
+  ruby_lsp:
