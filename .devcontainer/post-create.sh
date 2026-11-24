@@ -5,6 +5,8 @@ sed -i 's/ZSH_THEME="devcontainers"/ZSH_THEME="robbyrussell"/' "$HOME/.zshrc" ||
 
 echo "📂 current dir: $(pwd)"
 
+sudo chown "$(id -u):$(id -g)" tmp/cache .ruby-lsp
+
 if ! bundle check; then
     bundle install || {
         echo "⚠️ bundle install falló, limpiando instalación parcial de gems y reintentando..." >&2
